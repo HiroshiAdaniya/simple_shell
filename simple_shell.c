@@ -1,4 +1,4 @@
-#include "main.h"
+#include "shell.h"
 /**
  * main - prints 4 environment variables, PID and PPID
  * Return: 0 on success
