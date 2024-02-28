@@ -1,9 +1,9 @@
 #include "shell.h"
 /**
- * simple_shell - a simple shell program
+ * main - a simple shell program
  * Return: 0 on success
  */
-int simple_shell(void)
+int main(void)
 {
 	ssize_t child, i = 0;
 	size_t len = 0;
@@ -12,7 +12,7 @@ int simple_shell(void)
 	cmd = malloc(sizeof(char *) * 2);
 	while (1 && i != EOF)
 	{
-		printf("($): ");
+		write(STDOUT_FILENO, "($): ", 6);
 		i = 0;
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
