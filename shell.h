@@ -13,5 +13,4 @@ extern char **environ;
 
 int main(void);
 int simple_shell(void);
-
 #endif

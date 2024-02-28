@@ -1,9 +1,9 @@
 #include "shell.h"
 /**
- * main - a simple shell program
+ * simple_shell - a simple shell program
  * Return: 0 on success
  */
-int main(void)
+int simple_shell(void)
 {
 	ssize_t child, i = 0;
 	size_t len = 0;
