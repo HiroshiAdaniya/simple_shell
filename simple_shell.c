@@ -31,6 +31,11 @@ int main(void)
 	for (i = 0; i < 50; i++)
 		printf("=");
 	putchar('\n');
-
+	i = simple_shell();
+	if (i == -1)
+	{
+		printf("Could not run shell\n");
+		exit(EXIT_FAILURE);
+	}
 	return (0);
 }
