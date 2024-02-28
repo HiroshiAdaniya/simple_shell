@@ -10,6 +10,8 @@ int main(void)
 	char delim[] = " \n", **cmd, *str, *getcmd = NULL;
 
 	cmd = malloc(sizeof(char *) * 2);
+	if (cmd == NULL)
+		return (-1);
 	while (1 && i != EOF)
 	{
 		write(STDOUT_FILENO, "($): ", 6);
