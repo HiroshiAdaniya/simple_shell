@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * simple_shell - a simple shell program
+ * main - a simple shell program
  * Return: 0 on success
  */
 int main(void)
