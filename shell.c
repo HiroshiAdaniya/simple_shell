@@ -23,6 +23,7 @@ int main(void)
 		{
 			write(STDOUT_FILENO, "\n", 1);
 			free(getcmd);
+			free(cmd);
 			return (0);
 		}
 		cmd[0] = strtok(getcmd, delim);
@@ -39,11 +40,13 @@ int main(void)
 		{
 			i = execve(cmd[0], cmd, environ);
 			if (i == -1)
+			{
+				free(getcmd);
 				return (0);
+			}
 		}
 		else
 			wait(NULL);
 	}
-	free(cmd);
 	return (0);
 }
