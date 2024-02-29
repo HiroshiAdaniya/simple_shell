@@ -2,48 +2,45 @@
 void free_mem(char **, char *);
 /**
  * main - a simple shell program
+ * @argc: argument counter
+ * @argv: argument vector
+ * @envp: environment pointer
  * Return: 0 on success
  */
-int main(void)
+int main(int argc, char *argv[], char *envp[])
 {
 	ssize_t child, i = 0;
 	size_t len = 0;
 	char delim[] = " \n", **cmd, *getcmd = NULL;
 
+	if (argc < 1)
+		return (0);
 	cmd = malloc(sizeof(char *) * 2);
 	if (cmd == NULL)
 	{
 		free(cmd);
 		return (0);
 	}
-	while (1 && i != EOF)
+	while (1 && child != EOF)
 	{
-		i = getline(&getcmd, &len, stdin);
-		if (i == -1)
+		child = getline(&getcmd, &len, stdin);
+		if (child == -1)
 		{
 			free_mem(cmd, getcmd);
 			return (0);
 		}
-		i = 0;
 		cmd[i] = strtok(getcmd, delim);
-		while (cmd[i] != NULL)
+		child = fork();
+		if (child == -1)
+			return (0);
+		if (child == 0)
 		{
-			i++;
-			cmd[i] = strtok(NULL, delim);
-		}
-		if (cmd[1] == NULL)
-		{
-			child = fork();
-			if (child == -1)
-				return (0);
-			if (child == 0)
+			i = execve(cmd[0], cmd, envp);
+			if (i == -1)
 			{
-				i = execve(cmd[0], cmd, environ);
-				if (i == -1)
-				{
-					free_mem(cmd, getcmd);
-					return (0);
-				}
+				printf("%s: 1: %s: not found\n", argv[0], *cmd);
+				free_mem(cmd, getcmd);
+				return (0);
 			}
 		}
 		else
@@ -52,7 +49,7 @@ int main(void)
 	return (0);
 }
 /**
- * free_mem - frees memeory
+ * free_mem - frees memory
  * @s: pointer to a pointer of char
  * @z: a pointer to a string
  * Return: NULL;
