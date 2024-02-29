@@ -1,4 +1,5 @@
 #include "shell.h"
+void free_mem(char **, char *);
 /**
  * main - a simple shell program
  * Return: 0 on success
@@ -17,13 +18,10 @@ int main(void)
 	}
 	while (1 && i != EOF)
 	{
-		write(STDOUT_FILENO, "($): ", 6);
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
 		{
-			write(STDOUT_FILENO, "\n", 1);
-			free(getcmd);
-			free(cmd);
+			free_mem(cmd, getcmd);
 			return (0);
 		}
 		cmd[0] = strtok(getcmd, delim);
@@ -41,7 +39,7 @@ int main(void)
 			i = execve(cmd[0], cmd, environ);
 			if (i == -1)
 			{
-				free(getcmd);
+				free_mem(cmd, getcmd);
 				return (0);
 			}
 		}
@@ -49,4 +47,15 @@ int main(void)
 			wait(NULL);
 	}
 	return (0);
+}
+/**
+ * free_mem - frees memeory
+ * @s: pointer to a pointer of char
+ * @z: a pointer to a string
+ * Return: NULL;
+ */
+void free_mem(char **s, char *z)
+{
+	free(s);
+	free(z);
 }
