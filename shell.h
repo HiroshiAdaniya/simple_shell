@@ -11,5 +11,7 @@ extern char **environ;
 #include <signal.h>
 #include <errno.h>
 
-int main(void);
+int main(int, char **);
+void free_mem(char **, char *);
+void cmderror(char **, char **);
 #endif
