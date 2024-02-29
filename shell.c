@@ -16,25 +16,35 @@ int main(void)
 		free(cmd);
 		return (0);
 	}
-	while (1 && child != EOF)
+	while (1 && i != EOF)
 	{
-		child = getline(&getcmd, &len, stdin);
-		if (child == -1)
+		i = getline(&getcmd, &len, stdin);
+		if (i == -1)
 		{
 			free_mem(cmd, getcmd);
 			return (0);
 		}
+		i = 0;
 		cmd[i] = strtok(getcmd, delim);
-		child = fork();
-		if (child == -1)
-			return (0);
-		if (child == 0)
+		while (cmd[i] != NULL)
 		{
-			i = execve(cmd[0], cmd, envp);
-			if (i == -1)
-			{
-				free_mem(cmd, getcmd);
+			i++;
+			cmd[i] = strtok(NULL, delim);
+		}
+		i++;
+		if (cmd[i] == NULL)
+		{
+			child = fork();
+			if (child == -1)
 				return (0);
+			if (child == 0)
+			{
+				i = execve(cmd[0], cmd, environ);
+				if (i == -1)
+				{
+					free_mem(cmd, getcmd);
+					return (0);
+				}
 			}
 		}
 		else
