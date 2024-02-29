@@ -2,9 +2,6 @@
 void free_mem(char **, char *);
 /**
  * main - a simple shell program
- * @argc: argument counter
- * @argv: argument vector
- * @envp: environment pointer
  * Return: 0 on success
  */
 int main(void)
