@@ -11,16 +11,19 @@ int main(void)
 
 	cmd = malloc(sizeof(char *) * 2);
 	if (cmd == NULL)
-		return (-1);
+	{
+		free(cmd);
+		return (0);
+	}
 	while (1 && i != EOF)
 	{
 		write(STDOUT_FILENO, "($): ", 6);
-		i = 0;
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
 		{
-			printf("terminated\n");
-			exit(EXIT_FAILURE);
+			write(STDOUT_FILENO, "\n", 1);
+			free(getcmd);
+			return (0);
 		}
 		cmd[0] = strtok(getcmd, delim);
 		str = strtok(NULL, delim);
@@ -31,12 +34,12 @@ int main(void)
 		}
 		child = fork();
 		if (child == -1)
-			return (-1);
+			return (0);
 		if (child == 0)
 		{
 			i = execve(cmd[0], cmd, environ);
 			if (i == -1)
-				perror("failed");
+				return (0);
 		}
 		else
 			wait(NULL);
