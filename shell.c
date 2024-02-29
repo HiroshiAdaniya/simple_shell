@@ -23,7 +23,7 @@ int main(void)
 		if (i == -1)
 		{
 			free_mem(cmd, getcmd);
-			putchar('\n');
+			/*putchar('\n');*/
 			return (0);
 		}
 		cmd[0] = strtok(getcmd, delim);
