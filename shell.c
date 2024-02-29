@@ -18,10 +18,12 @@ int main(void)
 	}
 	while (1 && i != EOF)
 	{
+		write(STDOUT_FILENO, "&: ", 3);
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
 		{
 			free_mem(cmd, getcmd);
+			putchar('\n');
 			return (0);
 		}
 		cmd[0] = strtok(getcmd, delim);
