@@ -1,22 +1,24 @@
 #include "shell.h"
-void free_mem(char **, char *);
 /**
  * main - a simple shell program
+ * @argc: argument counter
+ * @argv: argument vector
  * Return: 0 on success
  */
-int main(void)
+int main(int argc, char *argv[])
 {
 	ssize_t child, i = 0;
 	size_t len = 0;
 	char delim[] = " \n", **cmd, *getcmd = NULL;
 
+	if (argc < 1)
+		return (0);
 	cmd = malloc(sizeof(char *) * 2);
 	if (cmd == NULL)
 	{
 		free(cmd);
 		return (0);
 	}
-
 	while (1 && i != EOF)
 	{
 		i = getline(&getcmd, &len, stdin);
@@ -25,10 +27,8 @@ int main(void)
 			free_mem(cmd, getcmd);
 			return (0);
 		}
-		i = 0;
-		cmd[i] = strtok(getcmd, delim);
-		i++;
-		cmd[i] = NULL;
+		cmd[0] = strtok(getcmd, delim);
+		cmd[1] = NULL;
 		child = fork();
 		if (child == -1)
 			return (0);
@@ -37,6 +37,7 @@ int main(void)
 			i = execve(cmd[0], cmd, environ);
 			if (i == -1)
 			{
+				cmderror(argv, cmd);
 				free_mem(cmd, getcmd);
 				return (0);
 			}
@@ -56,4 +57,14 @@ void free_mem(char **s, char *z)
 {
 	free(s);
 	free(z);
+}
+/**
+ * cmderror - prints error message if command not found
+ * @argv: argvument vector
+ * @cmd: command
+ * Return: nothing / void
+ */
+void cmderror(char **argv, char **cmd)
+{
+	printf("%s: 1: %s: not found\n", argv[0], cmd[0]);
 }
