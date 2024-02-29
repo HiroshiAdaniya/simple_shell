@@ -11,6 +11,5 @@ extern char **environ;
 #include <signal.h>
 #include <errno.h>
 
-int main(void);
-int simple_shell(void);
+int main(int argc, char *argv[], char *envp[]);
 #endif
