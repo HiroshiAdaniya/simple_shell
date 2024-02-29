@@ -7,7 +7,7 @@ void free_mem(char **, char *);
  * @envp: environment pointer
  * Return: 0 on success
  */
-int main(int argc, char *argv[], char *envp[])
+int main(int argc, char __attribute__((unused))*argv[], char *envp[])
 {
 	ssize_t child, i = 0;
 	size_t len = 0;
@@ -38,7 +38,6 @@ int main(int argc, char *argv[], char *envp[])
 			i = execve(cmd[0], cmd, envp);
 			if (i == -1)
 			{
-				printf("%s: 1: %s: not found\n", argv[0], *cmd);
 				free_mem(cmd, getcmd);
 				return (0);
 			}
