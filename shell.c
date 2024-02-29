@@ -31,16 +31,19 @@ int main(void)
 			i++;
 			cmd[i] = strtok(NULL, delim);
 		}
-		child = fork();
-		if (child == -1)
-			return (0);
-		if (child == 0)
+		if (cmd[1] == NULL)
 		{
-			i = execve(cmd[0], cmd, environ);
-			if (i == -1)
-			{
-				free_mem(cmd, getcmd);
+			child = fork();
+			if (child == -1)
 				return (0);
+			if (child == 0)
+			{
+				i = execve(cmd[0], cmd, environ);
+				if (i == -1)
+				{
+					free_mem(cmd, getcmd);
+					return (0);
+				}
 			}
 		}
 		else
