@@ -8,7 +8,7 @@ int main(void)
 {
 	ssize_t child, i = 0;
 	size_t len = 0;
-	char delim[] = " \n", **cmd = NULL , *str, *getcmd = NULL;
+	char delim[] = " \n", **cmd, *getcmd = NULL;
 
 	cmd = malloc(sizeof(char *) * 2);
 	if (cmd == NULL)
@@ -24,12 +24,12 @@ int main(void)
 			free_mem(cmd, getcmd);
 			return (0);
 		}
-		cmd[0] = strtok(getcmd, delim);
-		str = strtok(NULL, delim);
-		if (str != NULL)
+		i = 0;
+		cmd[i] = strtok(getcmd, delim);
+		while (cmd[i] != NULL)
 		{
-			cmd[0] = "null";
-			cmd[1] = NULL;
+			i++;
+			cmd[i] = strtok(NULL, delim);
 		}
 		child = fork();
 		if (child == -1)
@@ -39,7 +39,6 @@ int main(void)
 			i = execve(cmd[0], cmd, environ);
 			if (i == -1)
 			{
-				write(STDOUT_FILENO, "FILE NOT FOUND\n", 15);
 				free_mem(cmd, getcmd);
 				return (0);
 			}
