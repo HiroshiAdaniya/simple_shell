@@ -27,6 +27,8 @@ int main(void)
 		}
 		i = 0;
 		cmd[i] = strtok(getcmd, delim);
+		i++;
+		cmd[i] = NULL;
 		child = fork();
 		if (child == -1)
 			return (0);
