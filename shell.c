@@ -7,14 +7,12 @@ void free_mem(char **, char *);
  * @envp: environment pointer
  * Return: 0 on success
  */
-int main(int argc, char __attribute__((unused))*argv[], char *envp[])
+int main(void)
 {
 	ssize_t child, i = 0;
 	size_t len = 0;
 	char delim[] = " \n", **cmd, *getcmd = NULL;
 
-	if (argc < 1)
-		return (0);
 	cmd = malloc(sizeof(char *) * 2);
 	if (cmd == NULL)
 	{
