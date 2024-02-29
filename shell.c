@@ -16,6 +16,7 @@ int main(void)
 		free(cmd);
 		return (0);
 	}
+
 	while (1 && i != EOF)
 	{
 		i = getline(&getcmd, &len, stdin);
@@ -31,20 +32,16 @@ int main(void)
 			i++;
 			cmd[i] = strtok(NULL, delim);
 		}
-		i++;
-		if (cmd[i] == NULL)
+		child = fork();
+		if (child == -1)
+			return (0);
+		if (child == 0)
 		{
-			child = fork();
-			if (child == -1)
-				return (0);
-			if (child == 0)
+			i = execve(cmd[0], cmd, environ);
+			if (i == -1)
 			{
-				i = execve(cmd[0], cmd, environ);
-				if (i == -1)
-				{
-					free_mem(cmd, getcmd);
-					return (0);
-				}
+				free_mem(cmd, getcmd);
+				return (0);
 			}
 		}
 		else
