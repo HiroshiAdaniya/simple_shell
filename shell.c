@@ -7,7 +7,7 @@
  */
 int main(int argc, char *argv[])
 {
-	ssize_t child, i = 0;
+	ssize_t child, i, j = 0;
 	size_t len = 0;
 	char delim[] = " \n", **cmd, *getcmd = NULL;
 
@@ -22,12 +22,17 @@ int main(int argc, char *argv[])
 	while (1 && i != EOF)
 	{
 		if (isatty(STDIN_FILENO))
-			write(STDIN_FILENO, "#: ", 4);
+			write(STDIN_FILENO, "#: ", 4);*/
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
 			free_mem(cmd, getcmd);
-		cmd[0] = strtok(getcmd, delim);
-		cmd[1] = NULL;
+		j = 0;
+		cmd[j] = strtok(getcmd, delim);
+		while (cmd[j] != NULL)
+		{
+			j++;
+			cmd[j] = strtok(NULL, delim);
+		}
 		child = fork();
 		if (child == -1 || cmd[0] == NULL)
 			free_mem(cmd, getcmd);
@@ -66,7 +71,7 @@ void free_mem(char **s, char *z)
 {
 	free(s);
 	free(z);
-	exit(0);
+	exit(EXIT_FAILURE);
 }
 /**
  * cmderror - prints error message if command not found
