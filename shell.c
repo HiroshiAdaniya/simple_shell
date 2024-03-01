@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
 	}
 	while (1 && i != EOF)
 	{
+		if (isatty(STDIN_FILENO))
+			write(STDIN_FILENO, "#: ", 4);
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
 			free_mem(cmd, getcmd);
