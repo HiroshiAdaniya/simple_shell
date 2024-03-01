@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 		cmd[0] = strtok(getcmd, delim);
 		cmd[1] = NULL;
 		child = fork();
-		if (child == -1 || cmd[0] == NULL)
+		if (child == -1)
 			free_mem(cmd, getcmd);
 		if (child == 0)
 		{
