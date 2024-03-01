@@ -21,9 +21,13 @@ int main(int argc, char *argv[])
 	}
 	while (1 && i != EOF)
 	{
+		prompt();
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
+		{
+			putchar('\n');
 			free_mem(cmd, getcmd);
+		}
 		i = 0;
 		cmd[i] = strtok(getcmd, delim);
 		while (cmd[i] != NULL)
@@ -35,14 +39,7 @@ int main(int argc, char *argv[])
 		if (child == -1 || cmd[0] == NULL)
 			free_mem(cmd, getcmd);
 		if (child == 0)
-		{
-			i = execve(cmd[0], cmd, environ);
-			if (i == -1)
-			{
-				cmderror(argv, cmd);
-				free_mem(cmd, getcmd);
-			}
-		}
+			_execute(cmd, argv, getcmd);
 		else
 			wait(NULL);
 	}
@@ -69,4 +66,30 @@ void free_mem(char **s, char *z)
 void cmderror(char **argv, char **cmd)
 {
 	printf("%s: 1: %s: not found\n", argv[0], cmd[0]);
+}
+/**
+ * prompt - displays a prompt
+ * Return: nothing / void
+ */
+void prompt(void)
+{
+	write(STDOUT_FILENO, "#: ", 3);
+}
+/**
+ * _execute - executes a program
+ * @cmd: pointer to a pointer of strings
+ * @argv: argument vector
+ * @getcmd: a pointer to a string
+ * Return: nothing / void
+ */
+void _execute(char **cmd, char **argv, char *getcmd)
+{
+	ssize_t j = 0;
+
+	j = execve(cmd[0], cmd, environ);
+	if (j == -1)
+	{
+		cmderror(argv, cmd);
+		free_mem(cmd, getcmd);
+	}
 }

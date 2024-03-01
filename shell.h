@@ -14,4 +14,6 @@ extern char **environ;
 int main(int, char **);
 void free_mem(char **, char *);
 void cmderror(char **, char **);
+void prompt(void);
+void _execute(char **cmd, char **argv, char *getcmd);
 #endif
