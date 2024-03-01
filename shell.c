@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 			cmd[i] = strtok(NULL, delim);
 		}
 		child = fork();
-		if (child == -1 || cmd[0] == NULL || strcmp(cmd[0], "exit") == 0)
+		if (child == -1 || cmd[0] == NULL)
 			free_mem(cmd, getcmd);
 		if (child == 0)
 			_execute(cmd, argv, getcmd);
