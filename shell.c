@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 	ssize_t child, i = 0;
 	size_t len = 0;
 	char delim[] = " \n", **cmd, *getcmd = NULL;
-
+	
 	if (argc < 1)
 		return (0);
 	cmd = malloc(sizeof(char *) * 2);
@@ -28,10 +28,7 @@ int main(int argc, char *argv[])
 		cmd[1] = NULL;
 		child = fork();
 		if (child == -1 || cmd[0] == NULL)
-		{
-			cmderror(argv, cmd);
 			free_mem(cmd, getcmd);
-		}
 		if (child == 0)
 		{
 			i = execve(cmd[0], cmd, environ);
