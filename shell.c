@@ -25,13 +25,8 @@ int main(int argc, char *argv[])
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
 			free_mem(cmd, getcmd);
-		i = 0;
-		cmd[i] = strtok(getcmd, delim);
-		while (cmd[i] != NULL)
-		{
-			i++;
-			cmd[i] = strtok(NULL, delim);
-		}
+		cmd[0] = strtok(getcmd, delim);
+		cmd[1] = NULL;
 		child = fork();
 		if (child == -1 || cmd[0] == NULL)
 			free_mem(cmd, getcmd);
