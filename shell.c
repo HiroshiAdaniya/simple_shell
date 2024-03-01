@@ -23,15 +23,12 @@ int main(int argc, char *argv[])
 	{
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
-		{
 			free_mem(cmd, getcmd);
-			return (0);
-		}
 		cmd[0] = strtok(getcmd, delim);
 		cmd[1] = NULL;
 		child = fork();
-		if (child == -1)
-			return (0);
+		if (child == -1 || cmd[0] == NULL)
+			free_mem(cmd, getcmd);
 		if (child == 0)
 		{
 			i = execve(cmd[0], cmd, environ);
@@ -39,7 +36,6 @@ int main(int argc, char *argv[])
 			{
 				cmderror(argv, cmd);
 				free_mem(cmd, getcmd);
-				return (0);
 			}
 		}
 		else
@@ -57,6 +53,7 @@ void free_mem(char **s, char *z)
 {
 	free(s);
 	free(z);
+	exit(0);
 }
 /**
  * cmderror - prints error message if command not found
