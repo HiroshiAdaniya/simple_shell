@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 		if (child == -1 || cmd[0] == NULL)
 			free_mem(cmd, getcmd);
 		if (child == 0)
-			_execute(cmd, getcmd, argv);
+			_execute(cmd, argv, getcmd);
 		else
 			wait(NULL);
 	}
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
  * @argv: argument vector
  * Return: nothing / void
  */
-void _execute(char **cmd, char *getcmd, char **argv)
+void _execute(char **cmd, char **argv, char *getcmd)
 {
 	ssize_t i = 0;
 
