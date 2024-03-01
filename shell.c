@@ -30,35 +30,26 @@ int main(int argc, char *argv[])
 		}
 		i = 0;
 		cmd[i] = strtok(getcmd, delim);
-		if (cmd[i] != NULL)
+		while (cmd[i] != NULL)
 		{
-			while (cmd[i] != NULL)
-			{
-				i++;
-				cmd[i] = strtok(NULL, delim);
-			}
+			i++;
+			cmd[i] = strtok(NULL, delim);
+		}
+		if (cmd[0] != NULL)
+		{
 			child = fork();
 			if (child == -1 || strcmp(cmd[0], "exit") == 0)
 				free_mem(cmd, getcmd);
-			if (child == 0)
-				_execute(cmd, argv, getcmd);
-			else
-				wait(NULL);
+			if (cmd[0] != NULL)
+			{
+				if (child == 0)
+					_execute(cmd, argv, getcmd);
+				else
+					wait(NULL);
+			}
 		}
-	}
+	}	
 	return (0);
-}
-/**
- * free_mem - frees memory
- * @s: pointer to a pointer of char
- * @z: a pointer to a string
- * Return: NULL;
- */
-void free_mem(char **s, char *z)
-{
-	free(s);
-	free(z);
-	exit(0);
 }
 /**
  * cmderror - prints error message if command not found
@@ -95,4 +86,16 @@ void _execute(char **cmd, char **argv, char *getcmd)
 		cmderror(argv, cmd);
 		free_mem(cmd, getcmd);
 	}
+}
+/**
+ * free_mem - frees memory
+ * @s: pointer to a pointer of char
+ * @z: a pointer to a string
+ * Return: void
+ */
+void free_mem(char **s, char *z)
+{
+	free(s);
+	free(z);
+	exit(0);
 }
