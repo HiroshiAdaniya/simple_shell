@@ -30,18 +30,21 @@ int main(int argc, char *argv[])
 		}
 		i = 0;
 		cmd[i] = strtok(getcmd, delim);
-		while (cmd[i] != NULL)
+		if (cmd[i] != NULL)
 		{
-			i++;
-			cmd[i] = strtok(NULL, delim);
+			while (cmd[i] != NULL)
+			{
+				i++;
+				cmd[i] = strtok(NULL, delim);
+			}
+			child = fork();
+			if (child == -1 || strcmp(cmd[0], "exit") == 0)
+				free_mem(cmd, getcmd);
+			if (child == 0)
+				_execute(cmd, argv, getcmd);
+			else
+				wait(NULL);
 		}
-		child = fork();
-		if (child == -1 || cmd[0] == NULL)
-			free_mem(cmd, getcmd);
-		if (child == 0)
-			_execute(cmd, argv, getcmd);
-		else
-			wait(NULL);
 	}
 	return (0);
 }
