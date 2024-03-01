@@ -24,10 +24,7 @@ int main(int argc, char *argv[])
 		prompt();
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
-		{
-			putchar('\n');
 			free_mem(cmd, getcmd);
-		}
 		i = 0;
 		cmd[i] = strtok(getcmd, delim);
 		while (cmd[i] != NULL)
@@ -35,20 +32,14 @@ int main(int argc, char *argv[])
 			i++;
 			cmd[i] = strtok(NULL, delim);
 		}
-		if (cmd[0] != NULL)
-		{
-			child = fork();
-			if (child == -1 || strcmp(cmd[0], "exit") == 0)
-				free_mem(cmd, getcmd);
-			if (cmd[0] != NULL)
-			{
-				if (child == 0)
-					_execute(cmd, argv, getcmd);
-				else
-					wait(NULL);
-			}
-		}
-	}	
+		child = fork();
+		if (child == -1 || cmd[0] == NULL || strcmp(cmd[0], "exit") == 0)
+			free_mem(cmd, getcmd);
+		if (child == 0)
+			_execute(cmd, argv, getcmd);
+		else
+			wait(NULL);
+	}
 	return (0);
 }
 /**
