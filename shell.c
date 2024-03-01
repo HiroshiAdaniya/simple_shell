@@ -27,8 +27,11 @@ int main(int argc, char *argv[])
 		cmd[0] = strtok(getcmd, delim);
 		cmd[1] = NULL;
 		child = fork();
-		if (child == -1)
+		if (child == -1 || cmd[0] == NULL)
+		{
+			cmderror(argv, cmd);
 			free_mem(cmd, getcmd);
+		}
 		if (child == 0)
 		{
 			i = execve(cmd[0], cmd, environ);
