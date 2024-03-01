@@ -32,18 +32,29 @@ int main(int argc, char *argv[])
 		if (child == -1 || cmd[0] == NULL)
 			free_mem(cmd, getcmd);
 		if (child == 0)
-		{
-			i = execve(cmd[0], cmd, environ);
-			if (i == -1)
-			{
-				cmderror(argv, cmd);
-				free_mem(cmd, getcmd);
-			}
-		}
+			_execute(cmd, getcmd, argv);
 		else
 			wait(NULL);
 	}
 	return (0);
+}
+/**
+ * _execute - executes a command
+ * @cmd: pointer to array of pointers
+ * @getcmd: pointer to a string
+ * @argv: argument vector
+ * Return: nothing / void
+ */
+void _execute(char **cmd, char *getcmd, char **argv)
+{
+	ssize_t i = 0;
+
+	i = execve(cmd[0], cmd, environ);
+	if (i == -1)
+	{
+		cmderror(argv, cmd);
+		free_mem(cmd, getcmd);
+	}
 }
 /**
  * free_mem - frees memory
