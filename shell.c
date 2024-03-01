@@ -7,7 +7,7 @@
  */
 int main(int argc, char *argv[])
 {
-	ssize_t child, i, j = 0;
+	ssize_t child, i = 0;
 	size_t len = 0;
 	char delim[] = " \n", **cmd, *getcmd = NULL;
 
@@ -26,13 +26,8 @@ int main(int argc, char *argv[])
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
 			free_mem(cmd, getcmd);
-		j = 0;
-		cmd[j] = strtok(getcmd, delim);
-		while (cmd[j] != NULL)
-		{
-			j++;
-			cmd[j] = strtok(NULL, delim);
-		}
+		cmd[0] = strtok(getcmd, delim);
+		cmd[1] = NULL;
 		child = fork();
 		if (child == -1 || cmd[0] == NULL)
 			free_mem(cmd, getcmd);
@@ -71,7 +66,7 @@ void free_mem(char **s, char *z)
 {
 	free(s);
 	free(z);
-	exit(EXIT_FAILURE);
+	exit(0);
 }
 /**
  * cmderror - prints error message if command not found
