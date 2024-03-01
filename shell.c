@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 	ssize_t child, i = 0;
 	size_t len = 0;
 	char delim[] = " \n", **cmd, *getcmd = NULL;
-	
+
 	if (argc < 1)
 		return (0);
 	cmd = malloc(sizeof(char *) * 2);
@@ -24,8 +24,13 @@ int main(int argc, char *argv[])
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
 			free_mem(cmd, getcmd);
-		cmd[0] = strtok(getcmd, delim);
-		cmd[1] = NULL;
+		i = 0;
+		cmd[i] = strtok(getcmd, delim);
+		while (cmd[i] != NULL)
+		{
+			i++;
+			cmd[i] = strtok(NULL, delim);
+		}
 		child = fork();
 		if (child == -1 || cmd[0] == NULL)
 			free_mem(cmd, getcmd);
