@@ -9,7 +9,7 @@ int main(int __attribute__((unused))argc, char *argv[])
 {
 	ssize_t child, i = 0;
 	size_t len = 0;
-	char delim[] = " \n", **cmd, *getcmd = NULL;
+	char delim[] = " ", **cmd, *getcmd = NULL;
 
 	cmd = malloc(sizeof(char *) * 2);
 	if (cmd == NULL)
