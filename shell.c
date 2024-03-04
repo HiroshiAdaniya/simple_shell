@@ -9,7 +9,7 @@ int main(int __attribute__((unused))argc, char *argv[])
 {
 	ssize_t child, i = 0;
 	size_t len = 0;
-	char delim[] = " ", **cmd, *getcmd = NULL;
+	char delim[] = " \n", **cmd, *getcmd = NULL;
 
 	cmd = malloc(sizeof(char *) * 2);
 	if (cmd == NULL)
@@ -28,7 +28,6 @@ int main(int __attribute__((unused))argc, char *argv[])
 			free_mem(cmd, getcmd);
 		}
 		cmd[0] = strtok(getcmd, delim);
-		cmd[1] = NULL;
 		child = fork();
 		if (child == -1 || cmd[0] == NULL)
 			free_mem(cmd, getcmd);
