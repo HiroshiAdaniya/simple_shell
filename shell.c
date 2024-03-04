@@ -5,14 +5,12 @@
  * @argv: argument vector
  * Return: 0 on success
  */
-int main(int argc, char *argv[])
+int main(int __attribute__((unused))argc, char *argv[])
 {
 	ssize_t child, i = 0;
 	size_t len = 0;
-	char delim[] = " \n", **cmd, *getcmd = NULL;
+	char delim[] = "\n", **cmd, *getcmd = NULL;
 
-	if (argc < 1)
-		return (0);
 	cmd = malloc(sizeof(char *) * 2);
 	if (cmd == NULL)
 	{
@@ -22,10 +20,13 @@ int main(int argc, char *argv[])
 	while (1 && i != EOF)
 	{
 		if (isatty(STDIN_FILENO))
-			write(STDIN_FILENO, "#: ", 4);
+			write(STDIN_FILENO, "#: ", 3);
 		i = getline(&getcmd, &len, stdin);
 		if (i == -1)
+		{
+			write(STDIN_FILENO, "\n", 1);
 			free_mem(cmd, getcmd);
+		}
 		cmd[0] = strtok(getcmd, delim);
 		cmd[1] = NULL;
 		child = fork();
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
 			i = execve(cmd[0], cmd, environ);
 			if (i == -1)
 			{
-				cmderror(argv, cmd);
+				perror(argv[0]);
 				free_mem(cmd, getcmd);
 			}
 		}
@@ -56,14 +57,4 @@ void free_mem(char **s, char *z)
 	free(s);
 	free(z);
 	exit(0);
-}
-/**
- * cmderror - prints error message if command not found
- * @argv: argvument vector
- * @cmd: command
- * Return: nothing / void
- */
-void cmderror(char **argv, char **cmd)
-{
-	printf("%s: 1: %s: not found\n", argv[0], cmd[0]);
 }
