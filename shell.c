@@ -29,7 +29,6 @@ int main(int __attribute__((unused))argc, char *argv[])
 			free_mem(getcmd, string);
 		}
 		getcmd[0] = strtok(string, delim);
-		getcmd[1] = NULL;
 		child = fork();
 		if (child == -1 || getcmd[0] == NULL)
 			free_mem(getcmd, string);
