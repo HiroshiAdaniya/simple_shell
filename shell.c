@@ -7,9 +7,9 @@
  */
 int main(int __attribute__((unused))argc, char *argv[])
 {
-	ssize_t child, i = 0;
+	ssize_t i, child = 0;
 	size_t len = 0;
-	char delim[] = " \n", **cmd, *getcmd = NULL;
+	char delim[] = " \n", *string, **cmd, *getcmd = NULL;
 
 	cmd = malloc(sizeof(char *) * 2);
 	if (cmd == NULL)
@@ -27,13 +27,13 @@ int main(int __attribute__((unused))argc, char *argv[])
 			write(STDIN_FILENO, "\n", 1);
 			free_mem(cmd, getcmd);
 		}
-		cmd[0] = strtok(getcmd, delim);
+		string = strtok(getcmd, delim);
 		child = fork();
-		if (child == -1 || cmd[0] == NULL)
+		if (child == -1)
 			free_mem(cmd, getcmd);
 		if (child == 0)
 		{
-			i = execve(cmd[0], cmd, environ);
+			i = execve(string, cmd, environ);
 			if (i == -1)
 			{
 				perror(argv[0]);
