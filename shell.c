@@ -29,7 +29,7 @@ int main(int __attribute__((unused))argc, char *argv[])
 		}
 		string = strtok(getcmd, delim);
 		child = fork();
-		if (child == -1)
+		if (child == -1 || string == NULL)
 			free_mem(cmd, getcmd);
 		if (child == 0)
 		{
