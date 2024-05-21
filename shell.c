@@ -13,37 +13,38 @@ int main(int __attribute__((unused))argc, char *argv[])
 	char **cmd, *getcmd = NULL;
 
 	cmd = malloc(sizeof(char *) * 2);
-	if (getcmd == NULL)
-	{
-		free(cmd);
+	if (cmd == NULL)
 		return (0);
-	}
-	while (1 && i != EOF)
+	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDIN_FILENO, "#: ", 3);
-		i = getline(&cmd, &len, stdin);
-		if (i == -1)
+		i = getline(&getcmd, &len, stdin);
+		if (i == EOF)
 		{
 			write(STDIN_FILENO, "\n", 1);
-			free_mem(cmd, getcmd);
+			break;
 		}
 		cmd[0] = strtok(getcmd, delim);
+		cmd[1] = strtok(NULL, delim);
+		if (cmd[1] != NULL)
+			cmd[0] = cmd[1];
 		child = fork();
-		if (child == -1 || cmd[0] == NULL)
-			free_mem(cmd, getcmd);
+		if (child == -1)
+			break;
 		if (child == 0)
 		{
 			i = execve(cmd[0], cmd, environ);
 			if (i == -1)
 			{
 				perror(argv[0]);
-				free_mem(cmd, getcmd);
+				break;
 			}
 		}
 		else
 			wait(NULL);
 	}
+	free_mem(cmd, getcmd);
 	return (0);
 }
 /**
