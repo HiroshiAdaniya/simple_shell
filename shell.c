@@ -25,14 +25,15 @@ int main(int __attribute__((unused))argc, char *argv[])
 			write(STDIN_FILENO, "\n", 1);
 			break;
 		}
-		cmd[0] = strtok(getcmd, delim);
-		cmd[1] = strtok(NULL, delim);
-		if (cmd[1] != NULL)
-			cmd[0] = cmd[1];
+		i = 0;
+		cmd[i] = strtok(getcmd, delim);
+		for (i = 1; cmd[i] != NULL; i++)
+			cmd[i] = strtok(NULL, delim);
+
 		child = fork();
 		if (child == -1)
 			break;
-		if (child == 0)
+		if (child == 0 && cmd[1] == NULL)
 		{
 			i = execve(cmd[0], cmd, environ);
 			if (i == -1)
@@ -42,7 +43,11 @@ int main(int __attribute__((unused))argc, char *argv[])
 			}
 		}
 		else
+		{
+			if (cmd[1] != NULL)
+				perror(argv[0]);
 			wait(NULL);
+		}
 	}
 	free_mem(cmd, getcmd);
 	return (0);
