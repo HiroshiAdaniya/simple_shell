@@ -22,9 +22,12 @@ int main(int __attribute__((unused))argc, char *argv[])
 	while (1 && child != EOF)
 	{
 		if (isatty(STDIN_FILENO))
+		{
 			write(STDIN_FILENO, "#: ", 3);
+			fflush(stdout);
+		}
 		len = getline(&string, &i, stdin);
-		if (len == -1)
+		if (len == EOF || len == -1)
 		{
 			write(STDIN_FILENO, "\n", 1);
 			free_mem(command, string);
@@ -38,7 +41,10 @@ int main(int __attribute__((unused))argc, char *argv[])
 		{
 			child = execve(command[0], command, environ);
 				if (child == -1)
+				{
 					perror(argv[0]);
+					exit(0);
+				}
 		}
 		else
 			wait(NULL);
