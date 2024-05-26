@@ -51,8 +51,6 @@ int main(__attribute__((unused)) int argc, char *argv[])
  */
 void Error(char *cmd[], char *line, ssize_t r)
 {
-	if (r == EOF)
-		putchar('\n');
 	free_mem(cmd, line);
 	exit(-1);
 }
