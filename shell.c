@@ -19,14 +19,12 @@ int main(__attribute__((unused)) int argc, char *argv[])
 	while (true)
 	{
 		if (isatty(STDIN_FILENO) == 1)
-		{
 			write(STDOUT_FILENO, ":) ", 3);
-			r = getline(&line, &n, stdin);
-			fflush(stdin);
-			if (r == EOF || r == -1)
-				Error(cmd, line);
-		}
-		cmd[0] = NoNewline(line);
+		r = getline(&line, &n, stdin);
+		fflush(stdin);
+		if (r == EOF || r == -1)
+			Error(cmd, line, r);
+		cmd[0] = strtok(line, "\n");
 		cmd[1] = NULL;
 		r = fork();
 		if (r == -1)
@@ -48,11 +46,13 @@ int main(__attribute__((unused)) int argc, char *argv[])
  * Error - Error Handling of getline()
  * @cmd: pointer to an array of pointers
  * @line: a pointer to a string
+ * @r: an int  indicating the error
  * Return: Nothing / void
  */
-void Error(char *cmd[], char *line)
+void Error(char *cmd[], char *line, ssize_t r)
 {
-	putchar('\n');
+	if (r == EOF)
+		putchar('\n');
 	free_mem(cmd, line);
 	exit(-1);
 }

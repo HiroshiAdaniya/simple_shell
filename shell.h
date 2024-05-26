@@ -14,5 +14,5 @@ extern char **environ;
 
 void free_mem(char **, char *);
 char *NoNewline(char *);
-void Error(char **, char *);
+void Error(char **, char *, ssize_t);
 #endif
