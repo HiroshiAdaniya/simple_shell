@@ -10,9 +10,9 @@ extern char **environ;
 #include <string.h>
 #include <signal.h>
 #include <errno.h>
+#include <stdbool.h>
 
-int main(int __attribute__((unused)), char **);
 void free_mem(char **, char *);
-void cmderror(char **, char **);
-void _execute(char **cmd, char **argv, char *getcmd);
+char *NoNewline(char *);
+void Error(char **, char *);
 #endif

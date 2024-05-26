@@ -1,67 +1,90 @@
 #include "shell.h"
 /**
- * main - a simple shell program
- * @argc: argument counter
+ * main - entry point, a simple shell program
+ * @argc: argument counter, (unused)
  * @argv: argument vector
- * Return: 0 on success
+ * Return: 0 on Success
  */
-int main(int __attribute__((unused))argc, char *argv[])
+int main(__attribute__((unused)) int argc, char *argv[])
 {
-	ssize_t i, child = 0;
-	size_t len = 0;
-	char delim[] = " \n";
-	char **cmd, *getcmd = NULL;
+	char *line = NULL;
+	size_t n = 0;
+	ssize_t r = 0;
+	char **cmd = NULL;
 
 	cmd = malloc(sizeof(char *) * 2);
 	if (cmd == NULL)
-		return (0);
-	while (1)
-	{
-		if (isatty(STDIN_FILENO))
-			write(STDIN_FILENO, "#: ", 3);
-		i = getline(&getcmd, &len, stdin);
-		if (i == EOF)
-		{
-			write(STDIN_FILENO, "\n", 1);
-			break;
-		}
-		i = 0;
-		cmd[i] = strtok(getcmd, delim);
-		for (i = 1; cmd[i] != NULL; i++)
-			cmd[i] = strtok(NULL, delim);
+		return (-1);
 
-		child = fork();
-		if (child == -1)
-			break;
-		if (child == 0 && cmd[1] == NULL)
+	while (true)
+	{
+		if (isatty(STDIN_FILENO) == 1)
 		{
-			i = execve(cmd[0], cmd, environ);
-			if (i == -1)
-			{
-				perror(argv[0]);
-				break;
-			}
+			write(STDOUT_FILENO, ":) ", 3);
+			r = getline(&line, &n, stdin);
+			fflush(stdin);
+			if (r == EOF || r == -1)
+				Error(cmd, line);
+		}
+		cmd[0] = NoNewline(line);
+		cmd[1] = NULL;
+		r = fork();
+		if (r == -1)
+			return (-1);
+		if (r == 0)
+		{
+			r = execve(cmd[0], cmd, environ);
+			if (r == -1)
+			perror(argv[0]);
+			break;
 		}
 		else
-		{
-			if (cmd[1] != NULL)
-				perror(argv[0]);
 			wait(NULL);
-		}
 	}
-	free_mem(cmd, getcmd);
+	free_mem(cmd, line);
 	return (0);
 }
 /**
- * free_mem - frees memory
- * @s: pointer to a pointer of char
- * @z: a pointer to a string
- * Return: NULL;
+ * Error - Error Handling of getline()
+ * @cmd: pointer to an array of pointers
+ * @line: a pointer to a string
+ * Return: Nothing / void
  */
-void free_mem(char **s, char *z)
+void Error(char *cmd[], char *line)
 {
-	free(s);
-	free(z);
-	exit(0);
+	putchar('\n');
+	free_mem(cmd, line);
+	exit(-1);
 }
+/**
+ * NoNewline - removes the newline in the string
+ * @line: a pointer to a string
+ * Return: a string with no newline, else NULL
+ */
+char *NoNewline(char *line)
+{
+	int i = 0;
 
+	while (line[i] != '\n')
+	{
+		i++;
+		if (line[i] == '\n')
+		{
+			line[i] = '\0';
+			return (line);
+		}
+	}
+
+	return (NULL);
+}
+/**
+ * free_mem -  frees memory
+ * @cmd: a pointer to array of pointers of strings
+ * @line: a pointer to a string
+ * Return: Nothing / void
+ */
+void free_mem(char *cmd[], char *line)
+{
+	free(cmd);
+	free(line);
+}
