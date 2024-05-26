@@ -19,7 +19,7 @@ int main(int __attribute__((unused))argc, char *argv[])
 		free(command);
 		return (0);
 	}
-	while (1 && child != EOF)
+	while (true)
 	{
 		if (isatty(STDIN_FILENO))
 		{
@@ -30,21 +30,18 @@ int main(int __attribute__((unused))argc, char *argv[])
 		if (len == EOF || len == -1)
 		{
 			write(STDIN_FILENO, "\n", 1);
-			free_mem(command, string);
+			break;
 		}
 		command[0] = strtok(string, "\n");
 		command[1] = NULL;
 		child = fork();
 		if (child == -1)
-			free_mem(command, string);
-		if (child == 0)
+			break;
+		else if (child == 0)
 		{
 			child = execve(command[0], command, environ);
-				if (child == -1)
-				{
-					perror(argv[0]);
-					exit(0);
-				}
+			perror(argv[0]);
+			exit(0);
 		}
 		else
 			wait(NULL);
