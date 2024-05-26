@@ -8,7 +8,8 @@ void free_mem(char **, char *);
  */
 int main(int __attribute__((unused))argc, char *argv[])
 {
-	char *string, **command = NULL;
+	char *string = NULL;
+	char **command = NULL;
 	ssize_t len, child = 0;
 	size_t i = 0;
 
@@ -42,11 +43,18 @@ int main(int __attribute__((unused))argc, char *argv[])
 		else
 			wait(NULL);
 	}
+	free_mem(command, string);
 	return (0);
 }
+/**
+ * free_mem - frees memory
+ * @command: pointers to strings
+ * @string: a pointer to a string
+ * Return: nothing
+ */
 void free_mem(char **command, char *string)
 {
 	free(command);
 	free(string);
-	exit(EXIT_FAILURE);
+	exit(0);
 }
