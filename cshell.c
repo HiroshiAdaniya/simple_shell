@@ -1,29 +1,30 @@
 #include "shell.h"
-void free_mem(char **, char *);
 /**
- * main - A simple shell program
- * @argc: argument counter
+ * main - a simple shell program
+ * @argc; argument counter
  * @argv: argument vector
- * Return: Always 0 (Successful)
+ * Return: 0 on success
  */
-int main(int __attribute__((unused))argc, char *argv[])
+int main(__attribute__((unused))int argc, char *argv[])
 {
 	char *string = NULL;
 	char **command = NULL;
-	ssize_t len, child = 0;
+	ssize_t len = 0;
 	size_t i = 0;
+	pid_t pid = 0;
 
 	command = malloc(sizeof(char *) * 2);
 	if (command == NULL)
 	{
-		free(command);
-		return (0);
+		perror("malloc");
+		return (-1);
 	}
+
 	while (true)
 	{
-		if (isatty(STDIN_FILENO))
+		if(isatty(STDIN_FILENO))
 		{
-			write(STDIN_FILENO, "#: ", 3);
+			write(STDOUT_FILENO, "cshell: ", 8);
 			fflush(stdout);
 		}
 		len = getline(&string, &i, stdin);
@@ -32,32 +33,37 @@ int main(int __attribute__((unused))argc, char *argv[])
 			write(STDIN_FILENO, "\n", 1);
 			break;
 		}
+
 		command[0] = strtok(string, "\n");
 		command[1] = NULL;
-		child = fork();
-		if (child == -1)
-			break;
-		else if (child == 0)
+
+		pid = fork();
+		if (pid == -1)
 		{
-			child = execve(command[0], command, environ);
+			perror("fork");
+			break;
+		}
+		else if (pid == 0)
+		{
+			execve(command[0], command, environ);
 			perror(argv[0]);
-			exit(0);
+			break;
 		}
 		else
 			wait(NULL);
 	}
+
 	free_mem(command, string);
 	return (0);
 }
 /**
  * free_mem - frees memory
- * @command: pointers to strings
+ * @command: a pointer to an array of strings
  * @string: a pointer to a string
- * Return: nothing
+ * Return: Nothing / void
  */
 void free_mem(char **command, char *string)
 {
 	free(command);
 	free(string);
-	exit(0);
 }
