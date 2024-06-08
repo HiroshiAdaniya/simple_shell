@@ -18,7 +18,6 @@ int main(__attribute__((unused)) int argc, char *argv[])
 			break;
 		execute_command(string, argv[0]);
 	}
-	if (string != NULL)
-		free(string);
+	free(string);
 	return (0);
 }

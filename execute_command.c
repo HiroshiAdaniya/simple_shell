@@ -29,8 +29,11 @@ void execute_command(char *string, char *argv)
 		array[1] = NULL;
 		execve(array[0], array, environ);
 			perror(argv);
+		free(array[0]);
+		free(array);
 		exit(0);
 	}
 	else
 		wait(&status);
+	free(string);
 }
