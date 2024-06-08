@@ -29,7 +29,7 @@ void execute_command(char *string, char *argv, char **envp)
 			return;
 		}
 		array[0] = strtok(string, " \n");
-		len = strlength(array[0]);
+		len = strlen(array[0]);
 		array[0][len] = '\0';
 		array[1] = NULL;
 		execve(array[0], array, envp);
