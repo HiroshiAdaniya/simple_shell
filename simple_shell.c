@@ -5,7 +5,7 @@
  * @argv: argument vector
  * Return: 0 on Success
  */
-int main(__attribute__((unused)) int argc, char *argv[])
+int main(__attribute__((unused)) int argc, char *argv[], char *envp[])
 {
 	char *string = NULL;
 
@@ -16,7 +16,7 @@ int main(__attribute__((unused)) int argc, char *argv[])
 		string = read_line();
 		if (string == NULL)
 			break;
-		execute_command(string, argv[0]);
+		execute_command(string, argv[0], envp);
 	}
 	free(string);
 	return (0);

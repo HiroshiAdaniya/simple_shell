@@ -17,6 +17,5 @@ char *read_line(void)
 		free(str);
 		return (NULL);
 	}
-	str[length - 1] = '\0';
 	return (str);
 }

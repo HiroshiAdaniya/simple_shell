@@ -5,7 +5,7 @@
  * @argv: a null-terminated string, the program name
  * Return: Nothing / void
  */
-void execute_command(char *string, char *argv)
+void execute_command(char *string, char *argv, char **envp)
 {
 	char **array = NULL;
 	pid_t pid = 0;
@@ -25,9 +25,11 @@ void execute_command(char *string, char *argv)
 			perror("malloc");
 			return;
 		}
-		array[0] = string;
+		array[0] = malloc(sizeof(char) * (strlen(string)));
+		array[0] = strtok(string, " \n");
 		array[1] = NULL;
-		execve(array[0], array, environ);
+		execve(array[0], array, envp);
+		if (errno != EFAULT)
 			perror(argv);
 		free(array[0]);
 		free(array);
