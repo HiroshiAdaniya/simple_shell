@@ -25,7 +25,6 @@ void execute_command(char *string, char *argv, char **envp)
 			perror("malloc");
 			return;
 		}
-		array[0] = malloc(sizeof(char) * (strlen(string)));
 		array[0] = strtok(string, " \n");
 		array[1] = NULL;
 		execve(array[0], array, envp);
