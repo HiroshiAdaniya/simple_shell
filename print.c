@@ -8,5 +8,5 @@ void print(char *str)
 {
 	if (str == NULL)
 		return;
-	write(STDOUT_FILENO, str, (strlength(str) - 1));
+	write(STDOUT_FILENO, str, strlen(str));
 }
