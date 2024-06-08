@@ -22,7 +22,7 @@ extern char **environ;
 #include <errno.h>
 #include <stdbool.h>
 #include <fcntl.h>
-
+#include <errno.h>
 /**
  * Function prototypes
  */
@@ -31,7 +31,7 @@ void prompt(void);
 void print(char *);
 int strlength(char *);
 char *read_line(void);
-void execute_command(char *, char *);
+void execute_command(char *, char *, char **);
 
 char **allocation(char *);
 #endif
