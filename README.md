@@ -1,5 +1,9 @@
 # Simple Shell
 
+In this task I created my own simple shell called "HAsh$", which stands for "Hiroshi Adaniya's simple shell".
+
+This shell will be able to take in basic commands and execute them as per the requirements of the project.
+
 ### Shell
 
 The Shell is a program that allows a user to interact with the computers operating system to perform a specific task.
