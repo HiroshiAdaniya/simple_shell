@@ -10,7 +10,7 @@ void execute_command(char *string, char *argv, char **envp)
 	char **array = NULL;
 	pid_t pid = 0;
 	int status = 0;
-
+	
 	pid = fork();
 	if (pid == -1)
 	{
@@ -23,6 +23,7 @@ void execute_command(char *string, char *argv, char **envp)
 		if (array == NULL)
 		{
 			perror("malloc");
+			free(string);
 			return;
 		}
 		array[0] = strtok(string, " \n");
@@ -31,6 +32,7 @@ void execute_command(char *string, char *argv, char **envp)
 		if (errno != EFAULT)
 			perror(argv);
 		free(array[0]);
+		free(array[1]);
 		free(array);
 		exit(0);
 	}
