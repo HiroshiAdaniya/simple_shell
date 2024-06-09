@@ -10,12 +10,15 @@ char *read_line(void)
 	size_t n = 0;
 
 	length = getline(&str, &n, stdin);
-
+	
 	if (length == EOF)
 	{
 		write(STDIN_FILENO, "\n", 1);
 		free(str);
 		return (NULL);
 	}
+	n = strlength(str);
+	if (str[n - 1] == '\n')
+		str[n - 1] = '\0';
 	return (str);
 }

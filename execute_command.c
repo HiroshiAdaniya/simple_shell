@@ -10,7 +10,7 @@ void execute_command(char *string, char *argv, char **envp)
 	char **array = NULL;
 	pid_t pid = 0;
 	int status = 0;
-	int len = 0;
+	/*int len = 0;*/
 
 	pid = fork();
 	if (pid == -1)
@@ -28,9 +28,10 @@ void execute_command(char *string, char *argv, char **envp)
 			free(string);
 			return;
 		}
-		array[0] = strtok(string, " \n");
+		array[0] = strtok(string, "\0");
+		/*array[0] = strtok(string, " \n");
 		len = strlen(array[0]);
-		array[0][len] = '\0';
+		array[0][len] = '\0';*/
 		array[1] = NULL;
 		execve(array[0], array, envp);
 		if (errno != EFAULT)
