@@ -5,7 +5,7 @@
  * @argv: argument vector
  * Return: 0 on Success
  */
-int main(__attribute__((unused)) int argc, char *argv[], char *envp[])
+int main(__attribute__((unused)) int argc, char *argv[])
 {
 	char *string = NULL;
 
@@ -17,14 +17,14 @@ int main(__attribute__((unused)) int argc, char *argv[], char *envp[])
 			string = get_line();
 			if (string == NULL)
 				break;
-			execute_isatty(string, argv[0], envp);
+			execute_isatty(string, argv[0], environ);
 		}
 		else
 		{
 			string = get_line();
 			if (string == NULL)
 				break;
-			execute(string, argv[0], envp);
+			execute(string, argv[0], environ);
 		}
 	}
 
