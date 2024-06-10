@@ -12,11 +12,20 @@ int main(__attribute__((unused)) int argc, char *argv[], char *envp[])
 	while (true)
 	{
 		if (isatty(STDIN_FILENO))
+		{
 			prompt();
-		string = read_line();
-		if (string == NULL)
-			break;
-		execute_command(string, argv[0], envp);
+			string = get_line();
+			if (string == NULL)
+				break;
+			execute_isatty(string, argv[0], envp);
+		}
+		else
+		{
+			string = get_line();
+			if (string == NULL)
+				break;
+			execute(string, argv[0], envp);
+		}
 	}
 
 	free(string);

@@ -1,11 +1,12 @@
 #include "shell.h"
 /**
- * execute_command - executes a command
+ * execute_isatty - executes a command
  * @string: a null-terminated string
  * @argv: a null-terminated string, the program name
+ * @envp: environment variable
  * Return: Nothing / void
  */
-void execute_command(char *string, char *argv, char **envp)
+void execute_isatty(char *string, char *argv, char **envp)
 {
 	char **array = NULL;
 	pid_t pid = 0;
@@ -16,6 +17,7 @@ void execute_command(char *string, char *argv, char **envp)
 	if (pid == -1)
 	{
 		perror("fork");
+		free(string);
 		return;
 	}
 	else if (pid == 0)
@@ -28,9 +30,7 @@ void execute_command(char *string, char *argv, char **envp)
 			free(string);
 			return;
 		}
-		array[0] = strtok(string, " \n");
-		/*len = strlen(array[0]);
-		array[0][len] = '\0';*/
+		array[0] = strtok(string, "\0\n");
 		array[1] = NULL;
 		execve(array[0], array, envp);
 		if (errno != EFAULT)
