@@ -23,6 +23,8 @@ extern char **environ;
 #include <stdbool.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <signal.h>
+
 /**
  * Function prototypes
  */
@@ -30,8 +32,9 @@ extern char **environ;
 void prompt(void);
 void print(char *);
 int strlength(char *);
-char *read_line(void);
-void execute_command(char *, char *, char **);
+void execute_isatty(char *, char *, char **);
+void execute(char *, char *, char **);
+char *get_line(void);
 
-char **allocation(char *);
+
 #endif
