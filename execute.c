@@ -6,7 +6,7 @@
  * @envp: environment variable
  * Return: Nothing / void
  */
-void execute(char *string, char *argv, char **envp)
+void execute(char *string, __attribute__((unused))char *argv, char **envp)
 {
 	char **array = NULL;
 	pid_t pid = 0;

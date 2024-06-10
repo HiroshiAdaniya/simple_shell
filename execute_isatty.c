@@ -29,17 +29,18 @@ void execute_isatty(char *string, char *argv, char **envp)
 			free(string);
 			return;
 		}
-		array[0] = strtok(string, "\n");
+		array[0] = strtok(string, "\0");
 		array[1] = NULL;
 		execve(array[0], array, envp);
 		if (errno != EFAULT)
 			perror(argv);
-		free(array[0]);
+		/*free(array[0]);
 		free(array[1]);
-		free(array);
+		free(array);*/
 		exit(0);
 	}
 	else
 		wait(&status);
+	free(array);
 	free(string);
 }
