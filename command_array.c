@@ -23,13 +23,10 @@ char **command_array(string *terminal)
 	{
 		if(terminal->str[j] == ' ')
 			i++;
-		if (terminal->str[j] != ' ')
-			flag++;
+		/*if (terminal->str[j] != ' ')
+			flag++;*/
 		j++;
 	}
-
-	if (flag == 0)
-		return (NULL);
 
 	terminal->array = malloc(sizeof(char *) * (i + 1));
 	i = 0;
