@@ -16,12 +16,11 @@ char **command_array(string *terminal)
 	if (j != 0)
 		terminal->array = malloc(sizeof(char *) * (j + 1));
 	else
-		return (NULL);
-	*/
+		return (NULL);*/
 
 	while (terminal->str[j] != '\0')
 	{
-		if(terminal->str[j] == ' ')
+		if (terminal->str[j] == ' ')
 			i++;
 		/*if (terminal->str[j] != ' ')
 			flag++;*/
