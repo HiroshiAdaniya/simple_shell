@@ -33,8 +33,15 @@ string *read_line(int flag)
 	if (flag == true)
 		terminal->words = count_word(terminal->str);
 	else
+	{
 		terminal->array = command_array(terminal);
-		/*terminal->words = word_count(terminal->words, terminal->str); "old code"*/
+		if (terminal->array[0] == NULL)
+		{
+			free(terminal->str);
+			free(terminal);
+			return (NULL);
+		}
+	}
 	if (terminal->words != 0 && terminal->len > 0 && /*new code*/ flag == true)
 	{
 		terminal->array = create_array(terminal->str, terminal->words,
