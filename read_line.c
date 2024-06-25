@@ -16,7 +16,6 @@ string *read_line(int flag)
 		perror("malloc");
 		return (NULL);
 	}
-
 	initialize_struct(&terminal);
 	terminal->len = getline(&terminal->str, &terminal->n, stdin);
 	if (terminal->len == EOF)
@@ -34,9 +33,9 @@ string *read_line(int flag)
 	if (flag == true)
 		terminal->words = count_word(terminal->str);
 	else
-		terminal->words = word_count(terminal->words, terminal->str);
-
-	if (terminal->words != 0 && terminal->len > 0)
+		terminal->array = command_array(terminal);
+		/*terminal->words = word_count(terminal->words, terminal->str); "old code"*/
+	if (terminal->words != 0 && terminal->len > 0 && /*new code*/ flag == true)
 	{
 		terminal->array = create_array(terminal->str, terminal->words,
 		terminal->len);

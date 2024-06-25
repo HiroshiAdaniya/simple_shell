@@ -12,7 +12,7 @@ int word_count(int words, char *s)
 
 	if (strtok(s, " "))
 		words++;
-	while (strtok(NULL, " \n"))
+	while (strtok(NULL, " "))
 		words++;
 
 	return (words);
