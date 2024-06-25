@@ -42,7 +42,7 @@ string *read_line(int flag)
 			return (NULL);
 		}
 	}
-	if (terminal->words != 0 && terminal->len > 0 && /*new code*/ flag == true)
+	if (terminal->words != 0 && terminal->len > 0 && flag == true)
 	{
 		terminal->array = create_array(terminal->str, terminal->words,
 		terminal->len);

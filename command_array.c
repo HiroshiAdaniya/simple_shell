@@ -8,7 +8,7 @@ char **command_array(string *terminal)
 {
 	int i = 0;
 	int j = 0;
-	int flag = 0;
+
 	/*char *tmp;
 
 	tmp = terminal->str;
