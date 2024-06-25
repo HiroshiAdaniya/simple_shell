@@ -47,7 +47,7 @@ struct string
 /**
  * Function prototypes
  */
-
+char **command_array(string *);
 void execute_command(char *, string *);
 void free_terminal_memory(string **);
 void initialize_struct(string **terminal);
