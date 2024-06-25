@@ -26,15 +26,35 @@ extern char **environ;
 #include <signal.h>
 
 /**
+ * s - structure
+ * @str: a pointer to a string
+ * @array: NULL terminated array
+ * @len: length of str
+ * @n: number of bytes read
+ * Description: points to the next node
+ */
+typedef struct string string;
+struct string
+{
+	char *str;
+	char **array;
+	ssize_t len;
+	size_t n;
+	int words;
+};
+
+
+/**
  * Function prototypes
  */
 
+void execute_command(char *, string *);
+void free_terminal_memory(string **);
+void initialize_struct(string **terminal);
+string *read_line(int);
 void prompt(void);
 void print(char *);
-int strlength(char *);
-void execute_isatty(char *, char *, char **);
-void execute(char *, char *, char **);
-char *get_line(void);
-
-
+int word_count(int, char *);
+int count_word(char *);
+char **create_array(char *, int, ssize_t);
 #endif

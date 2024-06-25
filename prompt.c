@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * prompt - Displays a prompt
+ * prompt - prints a prompt to the user
  * Return: Nothing / void
  */
 void prompt(void)

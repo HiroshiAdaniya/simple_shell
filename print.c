@@ -1,12 +1,15 @@
 #include "shell.h"
 /**
- * print - prints a string to stdout
+ * print - prints a string
  * @str: a null-terminated string
- * Return: Nothing / void
+ * Return: nothig / void
  */
 void print(char *str)
 {
+	size_t len = 0;
+
 	if (str == NULL)
 		return;
-	write(STDOUT_FILENO, str, strlen(str));
+	len = strlen(str);
+	write(STDOUT_FILENO, str, len);
 }
