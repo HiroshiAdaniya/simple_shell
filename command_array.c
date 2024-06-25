@@ -6,19 +6,17 @@
  */
 char **command_array(string *terminal)
 {
-	int i = 1;
+	int i = 0;
 	int j = 0;
+	char *tmp;
 
-	while (terminal->str[j] != '\0')
-	{
-		if (terminal->str[j] == ' ')
-			i++;
-		j++;
-	}
+	tmp = terminal->str;
+	j = word_count(j, tmp);
+	if (j != 0)
+		terminal->array = malloc(sizeof(char *) * (j + 1));
+	else
+		return (NULL);
 
-	terminal->array = malloc(sizeof(char *) * (i + 1));
-
-	i = 0;
 	terminal->array[i] = strtok(terminal->str, " ");
 	i++;
 	while ((terminal->array[i] = strtok(NULL, " ")) != NULL)
