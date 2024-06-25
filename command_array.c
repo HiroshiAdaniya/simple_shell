@@ -8,7 +8,8 @@ char **command_array(string *terminal)
 {
 	int i = 0;
 	int j = 0;
-	char *tmp;
+	int flag = 0;
+	/*char *tmp;
 
 	tmp = terminal->str;
 	j = word_count(j, tmp);
@@ -16,12 +17,26 @@ char **command_array(string *terminal)
 		terminal->array = malloc(sizeof(char *) * (j + 1));
 	else
 		return (NULL);
+	*/
 
+	while (terminal->str[j] != '\0')
+	{
+		if(terminal->str[j] == ' ')
+			i++;
+		if (terminal->str[j] != ' ')
+			flag++;
+		j++;
+	}
+
+	if (flag == 0)
+		return (NULL);
+
+	terminal->array = malloc(sizeof(char *) * (i + 1));
+	i = 0;
 	terminal->array[i] = strtok(terminal->str, " ");
 	i++;
 	while ((terminal->array[i] = strtok(NULL, " ")) != NULL)
 		i++;
-
 	terminal->array[i] = NULL;
 
 	return (terminal->array);
