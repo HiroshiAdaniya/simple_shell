@@ -6,7 +6,7 @@
  */
 char **command_array(string *terminal)
 {
-	int i = 0;
+	int i = 1;
 	int j = 0;
 
 	/*char *tmp;

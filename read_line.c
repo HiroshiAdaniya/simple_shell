@@ -35,7 +35,7 @@ string *read_line(int flag)
 	else
 	{
 		terminal->array = command_array(terminal);
-		if (terminal->array == NULL)
+		if (terminal->array[0] == NULL)
 		{
 			free(terminal->str);
 			free(terminal);
