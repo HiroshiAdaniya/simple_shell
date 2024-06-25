@@ -3,6 +3,7 @@
  * read_line - reads an entire line from stdin,
  * Finds the amount of words in str
  * Assigns an array of strings to an array
+ * @flag: an integer representing a terminal or not
  * Return: a malloced structure, else NULL;
  */
 string *read_line(int flag)
@@ -17,7 +18,6 @@ string *read_line(int flag)
 	}
 
 	initialize_struct(&terminal);
-
 	terminal->len = getline(&terminal->str, &terminal->n, stdin);
 	if (terminal->len == EOF)
 	{
@@ -27,7 +27,6 @@ string *read_line(int flag)
 		free(terminal);
 		exit(0);
 	}
-
 	terminal->len = strlen(terminal->str);
 	if (terminal->str[terminal->len - 1] == 10)
 		terminal->str[terminal->len - 1] = '\0';
