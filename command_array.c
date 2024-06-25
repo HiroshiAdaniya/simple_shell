@@ -8,7 +8,7 @@ char **command_array(string *terminal)
 {
 	int i = 1;
 	int j = 0;
-
+	int flag = 0; /*new code*/
 	/*char *tmp;
 
 	tmp = terminal->str;
@@ -22,11 +22,15 @@ char **command_array(string *terminal)
 	{
 		if (terminal->str[j] == ' ')
 			i++;
-		/*if (terminal->str[j] != ' ')
-			flag++;*/
+		if (terminal->str[j] != ' ')
+			flag++; /*new flag*/
 		j++;
 	}
-
+	if (flag != 0)
+	{
+		terminal->array[0] = NULL;
+		return (terminal->array);
+	} /*new code*/
 	terminal->array = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	terminal->array[i] = strtok(terminal->str, " ");
