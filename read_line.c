@@ -3,7 +3,7 @@
  * read_line - reads an entire line from stdin,
  * Finds the amount of words in str
  * Assigns an array of strings to an array
- * @flag: an integer representing a terminal or not
+ * @flag: an integer representing interactive or non-interactive mode
  * Return: a malloced structure, else NULL;
  */
 string *read_line(int flag)
@@ -17,16 +17,9 @@ string *read_line(int flag)
 		return (NULL);
 	}
 	initialize_struct(&terminal);
-	terminal->len = getline(&terminal->str, &terminal->n, stdin);
-	if (terminal->len == EOF)
-	{
-		if (flag == true)
-			write(STDOUT_FILENO, "\n", 1);
-		free(terminal->str);
-		free(terminal);
-		exit(0);
-	}
+	get_line(&terminal, flag); /*new code, delete if it does not work*/
 	terminal->len = strlen(terminal->str);
+
 	if (terminal->str[terminal->len - 1] == 10)
 		terminal->str[terminal->len - 1] = '\0';
 
@@ -35,11 +28,9 @@ string *read_line(int flag)
 	else
 	{
 		terminal->array = command_array(terminal);
-		if (terminal->array[0] == NULL || terminal->array[0][0] == '\0' /*new code*/)
+		if (terminal->array[0] == NULL || terminal->array[0][0] == '\0')
 		{
-			free(terminal->array); /*new code*/
-			free(terminal->str);
-			free(terminal);
+			free_terminal_memory(&terminal);
 			return (NULL);
 		}
 	}
@@ -53,6 +44,5 @@ string *read_line(int flag)
 			return (NULL);
 		}
 	}
-
 	return (terminal);
 }

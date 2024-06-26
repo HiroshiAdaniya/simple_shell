@@ -1,14 +1,14 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-/** 
+/**
  * Global variables
  */
 
 extern char **environ;
 
 /**
- * Libraries 
+ * Libraries
  */
 
 #include <stdio.h>
@@ -33,6 +33,7 @@ extern char **environ;
  * @n: number of bytes read
  * Description: points to the next node
  */
+
 typedef struct string string;
 struct string
 {
@@ -47,6 +48,8 @@ struct string
 /**
  * Function prototypes
  */
+
+void get_line(string **, int);
 char **command_array(string *);
 void execute_command(char *, string *);
 void free_terminal_memory(string **);
