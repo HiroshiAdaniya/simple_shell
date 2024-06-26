@@ -30,7 +30,9 @@ string *read_line(int flag)
 		terminal->array = command_array(terminal);
 		if (terminal->array[0] == NULL || terminal->array[0][0] == '\0')
 		{
-			free_terminal_memory(&terminal);
+			free(terminal->array);
+			free(terminal->str);
+			free(terminal);
 			return (NULL);
 		}
 	}
