@@ -15,14 +15,18 @@ int main(int __attribute__((unused)) argc, char *argv[])
 		{
 			prompt();
 			terminal = read_line(true);
-			if (terminal != NULL)
-				execute_command(argv[0], terminal);
+			if (terminal != NULL && terminal->str[0] != '\0') /*added new && condition*/
+				execute_command(argv[0], terminal); /*old code to keep */
+			else if (terminal != NULL && terminal->str[0] == '\0') /*new code */
+				free_terminal_memory(&terminal);
 		}
 		else
 		{
 			terminal = read_line(false);
-			if (terminal != NULL)
+			if (terminal != NULL && terminal->str[0] != '\0')
 				execute_command(argv[0], terminal);
+			else if (terminal != NULL && terminal->str[0] == '\0')
+				free_terminal_memory(&terminal);
 		}
 	}
 
