@@ -24,6 +24,7 @@ extern char **environ;
 #include <fcntl.h>
 #include <errno.h>
 #include <signal.h>
+#include <dirent.h>
 
 /**
  * s - structure
@@ -49,6 +50,8 @@ struct string
  * Function prototypes
  */
 
+ssize_t locate_file(char *, string **);
+ssize_t search_in_path(char *, string **);
 void get_line(string **, int);
 char **command_array(string *);
 void execute_command(char *, string *);
@@ -60,4 +63,5 @@ void print(char *);
 int word_count(int, char *);
 int count_word(char *);
 char **create_array(char *, int, ssize_t);
+
 #endif
