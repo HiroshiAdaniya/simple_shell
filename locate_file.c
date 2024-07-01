@@ -21,7 +21,8 @@ ssize_t locate_file(char *path_dir, string **terminal)
 		 * e.g /bin/ls OR /bin/pwd
 		 * it does not handle single commands such as "ls" or "pwd"
 		 */
-		if ((path = realpath((*terminal)->array[0], NULL)) != NULL)
+		path = realpath((*terminal)->array[0], NULL);
+		if (path != NULL)
 		{
 			free(path);
 			found = 0;

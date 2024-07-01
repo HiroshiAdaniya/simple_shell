@@ -26,7 +26,7 @@ ssize_t search_in_path(char *path, string **terminal)
 	{
 		while ((path_dir = strtok(NULL, ":")) != NULL)
 		{
-			found = locate_file(path_dir, terminal);	
+			found = locate_file(path_dir, terminal);
 			if (found == 0)
 				break;
 		}
