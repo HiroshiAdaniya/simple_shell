@@ -28,11 +28,11 @@ void execute_command(char *program, string *terminal)
 ssize_t path_search(char *path, string *terminal)
 {
 	char *direc = NULL;
-	char *real_path = NULL;
+	/*char *real_path = NULL;*/
 	char *fullpath = NULL;
 	int len = 0;
 
-	real_path = realpath(terminal->array[0], real_path);
+	/*real_path = realpath(terminal->array[0], real_path);
 	if (real_path != NULL && access(real_path, X_OK) == 0)
 	{
 		free(real_path);
@@ -42,7 +42,7 @@ ssize_t path_search(char *path, string *terminal)
 	{
 		free(real_path);
 		return (-1);
-	}
+	}*/
 	else
 	{
 		direc = strtok(path, ":");
