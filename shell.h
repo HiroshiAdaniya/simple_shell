@@ -50,6 +50,8 @@ struct string
  * Function prototypes
  */
 
+void forking(char *, string *);
+
 ssize_t locate_file(char *, string **);
 ssize_t search_in_path(char *, string **);
 void get_line(string **, int);
