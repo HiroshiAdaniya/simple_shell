@@ -50,6 +50,10 @@ struct string
  * Function prototypes
  */
 
+/* new code 8th june 10:45 am*/
+ssize_t path_search(char *path, string *);
+/* end of new code*/
+
 void forking(char *, string *);
 void get_line(string **, int);
 char **command_array(string *);
