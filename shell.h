@@ -51,9 +51,6 @@ struct string
  */
 
 void forking(char *, string *);
-
-ssize_t locate_file(char *, string **);
-ssize_t search_in_path(char *, string **);
 void get_line(string **, int);
 char **command_array(string *);
 void execute_command(char *, string *);
