@@ -10,11 +10,7 @@ void execute_command(char *program, string *terminal)
 
 	path = getenv("PATH");
 	if (path != NULL)
-	{
-		/*terminal->len = search_in_path(path, &terminal);
-		if (terminal->len != -1)*/
-			forking(program, terminal);
-	}
+		forking(program, terminal);
 	else
 		perror("$PATH");
 	free_terminal_memory(&terminal);
