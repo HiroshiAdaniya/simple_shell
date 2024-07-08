@@ -20,65 +20,6 @@ void execute_command(char *program, string *terminal)
 	free_terminal_memory(&terminal);
 }
 /**
- * path_search - searches PATH directories for executables
- * @path: a pointer to a path
- * @terminal: a structure
- * Return: 0 on success, else -1
- */
-ssize_t path_search(char *path, string *terminal)
-{
-	char *direc = NULL;
-	char *real_path = NULL;
-	char *fullpath = NULL;
-	int len = 0;
-
-	real_path = realpath(terminal->array[0], real_path);
-	if (real_path != NULL && access(real_path, X_OK) == 0)
-	{
-		free(real_path);
-		return (0);
-	}
-	else if (real_path != NULL && access(real_path, X_OK) == -1)
-	{
-		free(real_path);
-		return (-1);
-	}
-	else
-	{
-		direc = strtok(path, ":");
-		len = strlen(direc) + 2 + strlen(terminal->array[0]);
-		fullpath = malloc(sizeof(char) * len + 1);
-		if (fullpath != NULL)
-			snprintf(fullpath, len, "%s/%s", direc, terminal->array[0]);
-		else
-			perror("malloc");
-		if (fullpath != NULL && access(fullpath, X_OK) == 0)
-		{
-			free(fullpath);
-			return (0);
-		}
-		else
-		{
-			while ((direc = strtok(NULL, ":")) != NULL)
-			{
-				len = strlen(direc) + 2 + strlen(terminal->array[0]);
-				fullpath = realloc(fullpath, sizeof(char) * len + 1);
-				if (fullpath != NULL)
-					snprintf(fullpath, len, "%s/%s", direc, terminal->array[0]);
-				else
-					perror("malloc");
-				if (fullpath != NULL && access(fullpath, X_OK) == 0)
-				{
-					free(fullpath);
-					return (0);
-				}
-			}
-		}
-	}
-	free(fullpath);
-	return (-1);
-}
-/**
  * forking - forks the current calling process
  * @program: the name of the program
  * @terminal: a structure
@@ -103,4 +44,103 @@ void forking(char *program, string *terminal)
 	}
 	else
 		wait(NULL);
+}
+/**
+ * path_copy - copies a sting to another string
+ * @path: the source string
+ * Return: a pointer to a string, else NULL
+ */
+char *path_copy(char *path)
+{
+	int len = 0;
+	char *string = NULL;
+
+	len = strlen(path) + 1;
+	if (len != 0)
+	{
+		string = malloc(sizeof(char) * len);
+		if (string == NULL)
+			return (NULL);
+		memmove(string, path, len);
+	}
+
+	return (string);
+
+}
+/**
+ * check_access - checks if the executable exists
+ * @terminal: a structure
+ * Return: 0 on success, else -1
+ */
+ssize_t check_access(string *terminal)
+{
+	char *direc = NULL;
+	char *command = NULL;
+	int len = 0;
+
+	direc = strtok(terminal->path_copy, ":");
+	len = strlen(direc) + strlen(terminal->array[0]) + 2;
+	command = malloc(sizeof(char) * len);
+	if (command == NULL)
+	{
+		perror("malloc");
+		return (-1);
+	}
+	else
+		snprintf(command, len, "%s/%s", direc, terminal->array[0]);
+
+	if (command != NULL && access(command, F_OK | X_OK) == 0)
+	{
+		memmove(terminal->array[0], command, len);
+		len = 0;
+	}
+	else
+	{
+		while ((direc = strtok(NULL, ":")) != NULL)
+		{
+			len = strlen(direc) + strlen(terminal->array[0]) + 2;
+			command = realloc(command, sizeof(char) * len);
+			if (command == NULL)
+			{
+				perror("malloc");
+				len = -1;
+				break;
+			}
+			else
+				snprintf(command, len, "%s/%s", direc, terminal->array[0]);
+			if (command != NULL && access(command, F_OK | X_OK) == 0)
+			{
+				memmove(terminal->array[0], command, len);
+				len = 0;
+				break;
+			}
+		}
+	}
+	free(command);
+	return (len);
+}
+
+/**
+ * path_search - searches PATH directories for executables
+ * @path: a pointer to a path
+ * @terminal: a structure
+ * Return: 0 on success, else -1
+ */
+ssize_t path_search(char *path, string *terminal)
+{
+	ssize_t flag = -1;
+	int len = 0;
+
+	len = realpath_check(terminal->array[0]);
+	if (len == 0)
+		return (0);
+	else if (len == 1)
+	{
+		terminal->path_copy = path_copy(path);
+		if (terminal->path_copy != NULL)
+			flag = check_access(terminal);
+
+	}
+	free(terminal->path_copy);
+	return (flag);
 }

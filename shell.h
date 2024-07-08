@@ -39,6 +39,7 @@ typedef struct string string;
 struct string
 {
 	char *str;
+	char *path_copy;
 	char **array;
 	ssize_t len;
 	size_t n;
@@ -50,9 +51,10 @@ struct string
  * Function prototypes
  */
 
-/* new code 8th june 10:45 am*/
 ssize_t path_search(char *path, string *);
-/* end of new code*/
+ssize_t realpath_check(char *);
+char *path_copy(char *);
+ssize_t check_access(string *);
 
 void forking(char *, string *);
 void get_line(string **, int);
