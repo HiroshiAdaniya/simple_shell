@@ -27,7 +27,7 @@ extern char **environ;
 #include <dirent.h>
 
 /**
- * s - structure
+ * string - structure
  * @str: a pointer to a string
  * @array: NULL terminated array
  * @len: length of str
@@ -54,7 +54,7 @@ struct string
 ssize_t path_search(char *path, string *);
 ssize_t realpath_check(char *);
 char *path_copy(char *);
-ssize_t check_access(string *);
+ssize_t check_access(string *, char *, char *);
 
 void forking(char *, string *);
 void get_line(string **, int);

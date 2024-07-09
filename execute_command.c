@@ -8,15 +8,13 @@ void execute_command(char *program, string *terminal)
 {
 	char *path = NULL;
 
+	terminal->len = 0;
 	path = getenv("PATH");
 	if (path != NULL)
-	{
 		terminal->len = path_search(path, terminal);
-		if (terminal->len != -1)
-			forking(program, terminal);
-	}
-	else
-		perror("$PATH");
+
+	if (terminal->len != -1)
+		forking(program, terminal);
 	free_terminal_memory(&terminal);
 }
 /**
@@ -70,54 +68,52 @@ char *path_copy(char *path)
 /**
  * check_access - checks if the executable exists
  * @terminal: a structure
+ * @direc: a pointer to hold string
+ * @command: a pointer
  * Return: 0 on success, else -1
  */
-ssize_t check_access(string *terminal)
+ssize_t check_access(string *terminal, char *direc, char *command)
 {
-	char *direc = NULL;
-	char *command = NULL;
-	int len = 0;
-
 	direc = strtok(terminal->path_copy, ":");
-	len = strlen(direc) + strlen(terminal->array[0]) + 2;
-	command = malloc(sizeof(char) * len);
+	terminal->len = strlen(direc) + strlen(terminal->array[0]) + 2;
+	command = malloc(sizeof(char) * terminal->len);
 	if (command == NULL)
 	{
 		perror("malloc");
 		return (-1);
 	}
 	else
-		snprintf(command, len, "%s/%s", direc, terminal->array[0]);
+		snprintf(command, terminal->len, "%s/%s", direc, terminal->array[0]);
 
 	if (command != NULL && access(command, F_OK | X_OK) == 0)
 	{
-		memmove(terminal->array[0], command, len);
-		len = 0;
+		memmove(terminal->array[0], command, terminal->len);
+		terminal->len = 0;
 	}
 	else
 	{
 		while ((direc = strtok(NULL, ":")) != NULL)
 		{
-			len = strlen(direc) + strlen(terminal->array[0]) + 2;
-			command = realloc(command, sizeof(char) * len);
+			terminal->len = strlen(direc) + strlen(terminal->array[0]) + 2;
+			command = realloc(command, sizeof(char) * terminal->len);
 			if (command == NULL)
 			{
 				perror("malloc");
-				len = -1;
+				terminal->len = -1;
 				break;
 			}
 			else
-				snprintf(command, len, "%s/%s", direc, terminal->array[0]);
+				snprintf(command, terminal->len, "%s/%s", direc, terminal->array[0]);
 			if (command != NULL && access(command, F_OK | X_OK) == 0)
 			{
-				memmove(terminal->array[0], command, len);
-				len = 0;
+				memmove(terminal->array[0], command, terminal->len);
+				terminal->len = 0;
 				break;
 			}
 		}
 	}
 	free(command);
-	return (len);
+	return (terminal->len);
 }
 
 /**
@@ -130,6 +126,8 @@ ssize_t path_search(char *path, string *terminal)
 {
 	ssize_t flag = -1;
 	int len = 0;
+	char *command = NULL;
+	char *direc = NULL;
 
 	len = realpath_check(terminal->array[0]);
 	if (len == 0)
@@ -138,7 +136,7 @@ ssize_t path_search(char *path, string *terminal)
 	{
 		terminal->path_copy = path_copy(path);
 		if (terminal->path_copy != NULL)
-			flag = check_access(terminal);
+			flag = check_access(terminal, direc, command);
 
 	}
 	free(terminal->path_copy);
