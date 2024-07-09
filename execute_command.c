@@ -74,6 +74,7 @@ char *path_copy(char *path)
  */
 ssize_t check_access(string *terminal, char *direc, char *command)
 {
+	terminal->len = -1;
 	direc = strtok(terminal->path_copy, ":");
 	terminal->len = strlen(direc) + strlen(terminal->array[0]) + 2;
 	command = malloc(sizeof(char) * terminal->len);
@@ -84,7 +85,6 @@ ssize_t check_access(string *terminal, char *direc, char *command)
 	}
 	else
 		snprintf(command, terminal->len, "%s/%s", direc, terminal->array[0]);
-
 	if (command != NULL && access(command, F_OK | X_OK) == 0)
 	{
 		memmove(terminal->array[0], command, terminal->len);
