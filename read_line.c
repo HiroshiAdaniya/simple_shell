@@ -17,7 +17,7 @@ string *read_line(int flag)
 		return (NULL);
 	}
 	initialize_struct(&terminal);
-	get_line(&terminal, flag); /*new code, delete if it does not work*/
+	get_line(&terminal, flag);
 	terminal->len = strlen(terminal->str);
 
 	if (terminal->str[terminal->len - 1] == 10)

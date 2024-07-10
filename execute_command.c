@@ -21,7 +21,6 @@ void execute_command(char *program, string *terminal, int flag)
 		}
 		terminal->len = path_search(path, terminal);
 	}
-
 	if (terminal->len != -1)
 		forking(program, terminal);
 	free_terminal_memory(&terminal);
@@ -123,7 +122,6 @@ ssize_t check_access(string *terminal, char *direc, char *command)
 	free(command);
 	return (terminal->len);
 }
-
 /**
  * path_search - searches PATH directories for executables
  * @path: a pointer to a path

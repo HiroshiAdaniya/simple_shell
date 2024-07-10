@@ -23,5 +23,6 @@ char **command_array(string *terminal)
 	while ((terminal->array[i] = strtok(NULL, " ")) != NULL)
 		i++;
 	terminal->array[i] = NULL;
+	terminal->words = i;
 	return (terminal->array);
 }
