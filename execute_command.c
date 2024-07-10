@@ -6,13 +6,13 @@
  * @flag: an integer representing an interactive mode or not
  * Return: 0 on success, else error code
  */
-int/*changed from void to int*/ execute_command(char *program, string *terminal, int flag)
+int execute_command(char *program, string *terminal, int flag)
 {
 	char *path = NULL;
 
 	terminal->len = 0;
 	path = getenv("PATH");
-	if (path != NULL && path[0] != '\0' && strlen(path) != 0) /*two new conditions*/
+	if (path != NULL && strlen(path) != 0) /*one new conditions*/
 	{
 		if (flag == true)
 		{
@@ -21,10 +21,11 @@ int/*changed from void to int*/ execute_command(char *program, string *terminal,
 		}
 		terminal->len = path_search(path, terminal);
 	}
-	else /*new else statment */
+	if (flag == false) /*new else statment */
 	{
 		fprintf(stderr, "%s: 1: %s: not found\n", program, terminal->array[0]);
-		return (127);
+		free_terminal_memory(&terminal);
+		exit(127);
 	}
 	if (terminal->len == 0)
 		forking(program, terminal);
