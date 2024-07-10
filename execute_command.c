@@ -12,15 +12,15 @@ void execute_command(char *program, string *terminal, int flag)
 
 	terminal->len = 0;
 	path = getenv("PATH");
-	/*if (path != NULL)
-	{*/
+	if (path != NULL)
+	{
 		if (flag == true)
 		{
 			free(terminal->array);
 			terminal->array = command_array(terminal);
 		}
 		terminal->len = path_search(path, terminal);
-	/*}*/
+	}
 	if (terminal->len == 0)
 		forking(program, terminal);
 	free_terminal_memory(&terminal);
