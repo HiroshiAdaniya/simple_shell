@@ -141,7 +141,7 @@ ssize_t path_search(char *path, string *terminal)
 	else if (len == 1)
 	{
 		terminal->path_copy = path_copy(path);
-		if (terminal->path_copy != NULL)
+		if (terminal->path_copy != NULL && path != NULL)
 			flag = check_access(terminal, direc, command);
 
 	}
