@@ -4,15 +4,15 @@
  * @program: a string containing the name of the program
  * @terminal: A structure holding the data received from the terminal
  * @flag: an integer representing an interactive mode or not
- * Return: Nothing / void
+ * Return: 0 on success, else error code
  */
-void execute_command(char *program, string *terminal, int flag)
+int/*changed from void to int*/ execute_command(char *program, string *terminal, int flag)
 {
 	char *path = NULL;
 
 	terminal->len = 0;
 	path = getenv("PATH");
-	if (path != NULL)
+	if (path != NULL && path[0] != '\0' && strlen(path) != 0) /*two new conditions*/
 	{
 		if (flag == true)
 		{
@@ -21,9 +21,16 @@ void execute_command(char *program, string *terminal, int flag)
 		}
 		terminal->len = path_search(path, terminal);
 	}
+	else /*new else statment */
+	{
+		fprintf(stderr, "%s: 1: %s: not found\n", program, terminal->array[0]);
+		return (127);
+	}
 	if (terminal->len == 0)
 		forking(program, terminal);
 	free_terminal_memory(&terminal);
+
+	return (0);
 }
 /**
  * forking - forks the current calling process

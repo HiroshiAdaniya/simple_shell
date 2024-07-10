@@ -61,7 +61,7 @@ ssize_t check_access(string *, char *, char *);
 void forking(char *, string *);
 void get_line(string **, int);
 char **command_array(string *);
-void execute_command(char *, string *, int);
+int execute_command(char *, string *, int);
 void free_terminal_memory(string **);
 void initialize_struct(string **terminal);
 string *read_line(int);
