@@ -21,8 +21,14 @@ void execute_command(char *program, string *terminal, int flag)
 		}
 		terminal->len = path_search(path, terminal);
 	}
-	if (terminal->len != -1)
+	if (terminal->len == 0)
 		forking(program, terminal);
+	else
+	{
+		fprintf(stderr, "./hsh: 1: %s: not found\n", terminal->array[0]);
+		free_terminal_memory(&terminal);
+		errno = 127;
+	}
 	free_terminal_memory(&terminal);
 }
 /**
