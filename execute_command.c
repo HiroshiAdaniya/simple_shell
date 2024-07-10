@@ -3,15 +3,24 @@
  * execute_command - executes a command
  * @program: a string containing the name of the program
  * @terminal: A structure holding the data received from the terminal
+ * @flag: an integer representing an interactive mode or not
+ * Return: Nothing / void
  */
-void execute_command(char *program, string *terminal)
+void execute_command(char *program, string *terminal, int flag)
 {
 	char *path = NULL;
 
 	terminal->len = 0;
 	path = getenv("PATH");
 	if (path != NULL)
+	{
+		if (flag == true)
+		{
+			free(terminal->array);
+			terminal->array = command_array(terminal);
+		}
 		terminal->len = path_search(path, terminal);
+	}
 
 	if (terminal->len != -1)
 		forking(program, terminal);
@@ -83,12 +92,12 @@ ssize_t check_access(string *terminal, char *direc, char *command)
 		perror("malloc");
 		return (-1);
 	}
-	else
-		snprintf(command, terminal->len, "%s/%s", direc, terminal->array[0]);
+	snprintf(command, terminal->len, "%s/%s", direc, terminal->array[0]);
 	if (command != NULL && access(command, F_OK | X_OK) == 0)
 	{
-		memmove(terminal->array[0], command, terminal->len);
+		terminal->array[0] = strdup(command);
 		terminal->len = 0;
+		terminal->n = 1;
 	}
 	else
 	{
@@ -98,16 +107,15 @@ ssize_t check_access(string *terminal, char *direc, char *command)
 			command = realloc(command, sizeof(char) * terminal->len);
 			if (command == NULL)
 			{
-				perror("malloc");
 				terminal->len = -1;
 				break;
 			}
-			else
-				snprintf(command, terminal->len, "%s/%s", direc, terminal->array[0]);
+			snprintf(command, terminal->len, "%s/%s", direc, terminal->array[0]);
 			if (command != NULL && access(command, F_OK | X_OK) == 0)
 			{
-				memmove(terminal->array[0], command, terminal->len);
+				terminal->array[0] = strdup(command);
 				terminal->len = 0;
+				terminal->n = 1;
 				break;
 			}
 		}

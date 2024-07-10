@@ -27,12 +27,15 @@ extern char **environ;
 #include <dirent.h>
 
 /**
- * string - structure
+ * string - a user defined data type / a structure
  * @str: a pointer to a string
- * @array: NULL terminated array
+ * @path_array: an array of stings, NULL terminated / path directories
+ * @array: an array of strings, NULL terminated / commands
  * @len: length of str
  * @n: number of bytes read
- * Description: points to the next node
+ * @words: an int representing the number of words in str
+ *
+ * Description: a data structure that will be used to run the simple shell
  */
 
 typedef struct string string;
@@ -55,11 +58,10 @@ ssize_t path_search(char *path, string *);
 ssize_t realpath_check(char *);
 char *path_copy(char *);
 ssize_t check_access(string *, char *, char *);
-
 void forking(char *, string *);
 void get_line(string **, int);
 char **command_array(string *);
-void execute_command(char *, string *);
+void execute_command(char *, string *, int);
 void free_terminal_memory(string **);
 void initialize_struct(string **terminal);
 string *read_line(int);
