@@ -21,8 +21,6 @@ void execute_command(char *program, string *terminal, int flag)
 		}
 		terminal->len = path_search(path, terminal);
 	}
-	else /*new code, the else statment */
-		fprintf(stderr, "%s: 1: %s: not found\n", program, command);
 	if (terminal->len == 0)
 		forking(program, terminal);
 	free_terminal_memory(&terminal);
