@@ -23,6 +23,17 @@ int execute_command(char *program, string *terminal, int flag)
 	}
 	if (i == 0)
 		forking(program, terminal);
+	else if (i != 0 && terminal->words != -1)
+	{
+		fprintf(stderr, "%s: 1: %s: not found\n", program, terminal->array[0]);
+		if (flag == false)
+		{
+			free_terminal_memory(&terminal);
+			exit(127);
+		}
+		else
+			i = 127;
+	}
 	free_terminal_memory(&terminal);
 
 	return (i);
