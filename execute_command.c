@@ -9,21 +9,21 @@
 int execute_command(char *program, string *terminal, int flag)
 {
 	char *path = NULL;
-	(void) flag;
 
-	terminal->len = 0;
+	terminal->len = -1;
 	path = getenv("PATH");
 	if (path != NULL && strlen(path) != 0)
 	{
-		/*if (flag == true)
-		{*/
+		if (flag == true)
+		{
 			free(terminal->array);
 			terminal->array = command_array(terminal);
-		/*}*/
+		}
 		terminal->len = path_search(path, terminal);
 	}
 	if (terminal->len == 0 && path != NULL)
 		forking(program, terminal);
+
 	free_terminal_memory(&terminal);
 
 	return (0);
