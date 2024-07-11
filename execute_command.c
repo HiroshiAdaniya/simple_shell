@@ -9,6 +9,7 @@
 int execute_command(char *program, string *terminal, int flag)
 {
 	char *path = NULL;
+	char *real_path = NULL;
 	int i = -1;
 
 	path = getenv("PATH");
@@ -21,10 +22,15 @@ int execute_command(char *program, string *terminal, int flag)
 		}
 		i = path_search(path, terminal);
 	}
-	/*else if (path == NULL)
+	else if (path == NULL && terminal->array[0] != NULL)
 	{
-		handle the full path after the removal of path
-	}*/
+		real_path = realpath(terminal->array[0], real_path);
+		if (real_path == NULL)
+			i = -1;
+		else
+			i = 0;
+		free(real_path);
+	}
 	if (i == 0)
 		forking(program, terminal);
 	else if (i != 0 && terminal->words != -1)
