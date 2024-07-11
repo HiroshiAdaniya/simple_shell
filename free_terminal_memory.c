@@ -7,7 +7,7 @@
 void free_terminal_memory(string **terminal)
 {
 	free((*terminal)->str);
-	if ((*terminal)->n == 1)
+	if ((*terminal)->words == -1)
 		free((*terminal)->array[0]);
 	free((*terminal)->array);
 	free(*terminal);
