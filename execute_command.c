@@ -12,7 +12,7 @@ int execute_command(char *program, string *terminal, int flag)
 
 	terminal->len = 0;
 	path = getenv("PATH");
-	if (path != NULL && strlen(path) != 0) /*one new conditions*/
+	if (path != NULL && strlen(path) != 0)
 	{
 		if (flag == true)
 		{
@@ -21,12 +21,12 @@ int execute_command(char *program, string *terminal, int flag)
 		}
 		terminal->len = path_search(path, terminal);
 	}
-	if (flag == false) /*new else statment */
+	/*if (flag == false) new else statment
 	{
 		fprintf(stderr, "%s: 1: %s: not found\n", program, terminal->array[0]);
 		free_terminal_memory(&terminal);
 		exit(127);
-	}
+	}*/
 	if (terminal->len == 0)
 		forking(program, terminal);
 	free_terminal_memory(&terminal);
