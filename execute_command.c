@@ -21,7 +21,7 @@ int execute_command(char *program, string *terminal, int flag)
 		}
 		i = path_search(path, terminal);
 	}
-	if (i == 0)
+	if (i != -1)
 		forking(program, terminal);
 	/*else if (terminal->len != 0 && path != NULL)
 	{
