@@ -9,7 +9,8 @@
 int execute_command(char *program, string *terminal, int flag)
 {
 	char *path = NULL;
-	int i = -1;
+	int i = 0;
+	terminal->len = -1;
 
 	path = getenv("PATH");
 	if (path != NULL && strlen(path) != 0)
@@ -19,21 +20,12 @@ int execute_command(char *program, string *terminal, int flag)
 			free(terminal->array);
 			terminal->array = command_array(terminal);
 		}
-		i = path_search(path, terminal);
+		terminal->len = path_search(path, terminal);
 	}
-	if (i != -1)
+	if (terminal->len != -1)
 		forking(program, terminal);
-	/*else if (terminal->len != 0 && path != NULL)
-	{
-		fprintf(stderr, "%s: 1: %s: not found\n", program, terminal->array[0]);
-		if (flag == false)
-		{
-			free_terminal_memory(&terminal);
-			exit(127);
-		}
-		else
-			flag = 127;
-	}*/
+
+	i = terminal->len;
 	free_terminal_memory(&terminal);
 
 	return (i);
