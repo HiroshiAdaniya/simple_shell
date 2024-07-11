@@ -23,7 +23,7 @@ int execute_command(char *program, string *terminal, int flag)
 	}
 	if (terminal->len == 0/* && path != NULL*/)
 		forking(program, terminal);
-	else if (terminal->len != 0 && path != NULL)
+	/*else if (terminal->len != 0 && path != NULL)
 	{
 		fprintf(stderr, "%s: 1: %s: not found\n", program, terminal->array[0]);
 		if (flag == false)
@@ -33,7 +33,7 @@ int execute_command(char *program, string *terminal, int flag)
 		}
 		else
 			flag = 127;
-	}
+	}*/
 	free_terminal_memory(&terminal);
 
 	return (flag);
