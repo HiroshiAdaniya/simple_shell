@@ -22,7 +22,7 @@ int execute_command(char *program, string *terminal, int flag)
 		}
 		terminal->len = path_search(path, terminal);
 	}
-	if (terminal->len != -1)
+	if (terminal->len == 0)
 		forking(program, terminal);
 
 	i = terminal->len;
