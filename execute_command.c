@@ -21,19 +21,14 @@ int execute_command(char *program, string *terminal, int flag)
 		}
 		i = path_search(path, terminal);
 	}
+	/*else if (path == NULL)
+	{
+		handle the full path after the removal of path
+	}*/
 	if (i == 0)
 		forking(program, terminal);
 	else if (i != 0 && terminal->words != -1)
-	{
-		fprintf(stderr, "%s: 1: %s: not found\n", program, terminal->array[0]);
-		if (flag == false)
-		{
-			free_terminal_memory(&terminal);
-			exit(127);
-		}
-		else
-			i = 127;
-	}
+		i = not_found(program, terminal->array[0], flag, terminal);
 	free_terminal_memory(&terminal);
 
 	return (i);
