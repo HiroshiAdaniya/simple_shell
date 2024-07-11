@@ -12,7 +12,7 @@ int execute_command(char *program, string *terminal, int flag)
 
 	terminal->len = -1;
 	path = getenv("PATH");
-	if (path != NULL && strlen(path) != 0)
+	if (path != NULL/* && strlen(path) != 0*/)
 	{
 		if (flag == true)
 		{
@@ -21,7 +21,7 @@ int execute_command(char *program, string *terminal, int flag)
 		}
 		terminal->len = path_search(path, terminal);
 	}
-	if (terminal->len == 0 && path != NULL)
+	if (terminal->len == 0/* && path != NULL*/)
 		forking(program, terminal);
 
 	free_terminal_memory(&terminal);
