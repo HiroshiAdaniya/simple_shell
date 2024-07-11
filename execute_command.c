@@ -9,6 +9,7 @@
 int execute_command(char *program, string *terminal, int flag)
 {
 	char *path = NULL;
+	(void) flag;
 
 	terminal->len = 0;
 	path = getenv("PATH");
