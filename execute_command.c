@@ -9,8 +9,8 @@
 int execute_command(char *program, string *terminal, int flag)
 {
 	char *path = NULL;
+	int i = -1;
 
-	terminal->len = -1;
 	path = getenv("PATH");
 	if (path != NULL && strlen(path) != 0)
 	{
@@ -19,13 +19,13 @@ int execute_command(char *program, string *terminal, int flag)
 			free(terminal->array);
 			terminal->array = command_array(terminal);
 		}
-		terminal->len = path_search(path, terminal);
+		i = path_search(path, terminal);
 	}
-	if (terminal->len == 0)
+	if (i == 0)
 		forking(program, terminal);
 	free_terminal_memory(&terminal);
 
-	return (0);
+	return (i);
 }
 /**
  * forking - forks the current calling process
