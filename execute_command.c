@@ -23,7 +23,20 @@ int execute_command(char *program, string *terminal, int flag)
 	}
 	if (terminal->len == 0/* && path != NULL*/)
 		forking(program, terminal);
-
+	else
+	{
+		fprintf(stderr, "%s: 1: %s: not found\n", program, terminal->array[0]);
+		if (flag == false)
+		{
+			free_terminal_memory(&terminal);
+			exit(127);
+		}
+		else
+		{
+			free_terminal_memory(&terminal);
+			return (127);
+		}
+	}
 	free_terminal_memory(&terminal);
 
 	return (0);
@@ -99,7 +112,7 @@ ssize_t check_access(string *terminal, char *direc, char *command)
 	{
 		terminal->array[0] = strdup(command);
 		terminal->len = 0;
-		terminal->n = 1;
+		terminal->words = -1;
 	}
 	else
 	{
@@ -117,7 +130,7 @@ ssize_t check_access(string *terminal, char *direc, char *command)
 			{
 				terminal->array[0] = strdup(command);
 				terminal->len = 0;
-				terminal->n = 1;
+				terminal->words = -1;
 				break;
 			}
 		}
