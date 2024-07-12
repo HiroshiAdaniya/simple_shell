@@ -9,6 +9,6 @@ void exit_function(string *terminal)
 	if (strcmp(terminal->array[0], "exit") == 0 && terminal->array[1] == NULL)
 	{
 		free_terminal_memory(&terminal);
-		exit(2);
+		exit(0);
 	}
 }
