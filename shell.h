@@ -27,7 +27,7 @@ extern char **environ;
 #include <dirent.h>
 
 /**
- * string - a user defined data type / a structure
+ * struct string - a user defined data type, a structure
  * @str: a pointer to a string
  * @path_array: an array of stings, NULL terminated / path directories
  * @array: an array of strings, NULL terminated / commands
@@ -53,6 +53,8 @@ struct string
 /**
  * Function prototypes
  */
+
+void exit_function(string *);
 int not_found(char *, char *, int, string *);
 ssize_t path_search(char *path, string *);
 ssize_t realpath_check(char *);
