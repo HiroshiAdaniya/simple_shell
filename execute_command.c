@@ -22,7 +22,7 @@ int execute_command(char *program, string *terminal, int flag)
 		}
 		i = path_search(path, terminal);
 	}
-	else if (path == NULL)
+	/*else if (path == NULL)
 	{
 		real_path = realpath(terminal->array[0], real_path);
 		if (real_path == NULL)
@@ -33,10 +33,10 @@ int execute_command(char *program, string *terminal, int flag)
 		else
 			i = 0;
 		free(real_path);
-	}
+	}*/
 	if (i == 0)
 		forking(program, terminal);
-	else if (i != 0 && (terminal->words != -1 || path == NULL/*new code*/))
+	else if (i != 0 && terminal->words != -1)
 		i = not_found(program, terminal->array[0], flag, terminal);
 	free_terminal_memory(&terminal);
 
