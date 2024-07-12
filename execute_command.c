@@ -29,6 +29,7 @@ int execute_command(char *program, string *terminal, int flag)
 			i = -1;
 		else
 			i = 0;
+		free(real_path);
 	}
 	if (i == 0)
 		forking(program, terminal);
