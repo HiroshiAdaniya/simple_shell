@@ -11,4 +11,8 @@ void exit_function(string *terminal)
 		free_terminal_memory(&terminal);
 		exit(0);
 	}
+	else if (strcmp(terminal->array[1], "exit") == 0)
+	{
+		exit(2);
+	}
 }
