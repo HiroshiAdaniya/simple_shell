@@ -13,7 +13,7 @@ int execute_command(char *program, string *terminal, int flag)
 	int i = -1;
 
 	path = getenv("PATH");
-	if (path != NULL && strlen(path) != 0)
+	if ((path != NULL || path == NULL) && strlen(path) != 0)
 	{
 		if (flag == true)
 		{
