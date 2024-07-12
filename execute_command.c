@@ -10,6 +10,7 @@ int execute_command(char *program, string *terminal, int flag)
 {
 	char *path = NULL;
 	int i = -1;
+	char *real_path = NULL;
 
 	path = getenv("PATH");
 	if (path != NULL && strlen(path) != 0)
@@ -20,6 +21,14 @@ int execute_command(char *program, string *terminal, int flag)
 			terminal->array = command_array(terminal);
 		}
 		i = path_search(path, terminal);
+	}
+	else if (path == NULL && terminal->array[0][0] == '/')
+	{
+		real_path = realpath(terminal->array[0], real_path);
+		if (real_path == NULL)
+			i = -1;
+		else
+			i = 0;
 	}
 	if (i == 0)
 		forking(program, terminal);
