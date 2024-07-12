@@ -36,7 +36,7 @@ int execute_command(char *program, string *terminal, int flag)
 	}
 	if (i == 0)
 		forking(program, terminal);
-	else if (i != 0 && terminal->words != -1)
+	else if (i != 0 && (terminal->words != -1 || path == NULL/*new code*/))
 		i = not_found(program, terminal->array[0], flag, terminal);
 	free_terminal_memory(&terminal);
 
