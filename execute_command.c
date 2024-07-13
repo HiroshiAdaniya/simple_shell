@@ -11,7 +11,7 @@ int execute_command(char *program, string *terminal, int flag)
 	char *path = NULL;
 	int i = -1;
 
-	exit_function(terminal);
+	exit_program(terminal);
 	path = getenv("PATH");
 	if (path != NULL && strlen(path) != 0)
 	{
