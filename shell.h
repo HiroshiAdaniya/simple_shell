@@ -54,6 +54,7 @@ struct string
  * Function prototypes
  */
 
+void print_env(string *);
 void exit_program(string *, int);
 int not_found(char *, char *, int, string *);
 ssize_t path_search(char *path, string *);

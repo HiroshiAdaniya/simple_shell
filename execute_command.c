@@ -12,6 +12,7 @@ int execute_command(char *program, string *terminal, int flag)
 	int i = -1;
 
 	path = getenv("PATH");
+	print_env(terminal);
 	if (path != NULL && strlen(path) != 0)
 	{
 		if (flag == true)
@@ -57,7 +58,7 @@ void forking(char *program, string *terminal)
 	}
 	else
 		wait(NULL);
-	exit_program(terminal, false);
+	/*exit_program(terminal, false);*/
 }
 /**
  * path_copy - copies a sting to another string
