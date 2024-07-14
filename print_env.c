@@ -9,10 +9,12 @@ int print_env(string *terminal)
 	int i = 0;
 
 	if (environ == NULL)
-		terminal->words = -1;
+		reteurn (0)
 	else if (strcmp(terminal->array[0], "env") == 0 && terminal->array[1] == NULL)
 	{
 		for (i = 0; environ[i] != NULL; i++)
 			printf("%s\n", environ[i]);
+		return (1);
 	}
+	return (0);
 }
