@@ -15,4 +15,5 @@ void print_env(string *terminal)
 		for (i = 0; environ[i] != NULL; i++)
 			printf("%s\n", environ[i]);
 	}
+	terminal->words = -1;
 }
