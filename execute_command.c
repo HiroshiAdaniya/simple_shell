@@ -32,8 +32,6 @@ int execute_command(char *program, string *terminal, int flag)
 		forking(program, terminal);
 	else if (i != 0 && terminal->words != -1)
 		i = not_found(program, terminal->array[0], flag, terminal);
-	if (flag == false && i == 0)
-		exit_program(terminal, false);
 	free_terminal_memory(&terminal);
 
 	return (i);
