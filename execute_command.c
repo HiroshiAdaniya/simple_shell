@@ -10,14 +10,15 @@ int execute_command(char *program, string *terminal, int flag)
 {
 	char *path = NULL;
 	int i = -1;
+	int environment = 0;
 
 	if (strcmp(terminal->array[0], "exit") == 0)
 		exit_program(terminal, true);
 
-	print_env(terminal);
+	environment = print_env(terminal);
 	path = getenv("PATH");
 
-	if (path != NULL && strlen(path) != 0)
+	if (path != NULL && strlen(path) != 0 && environment == 0)
 	{
 		if (flag == true)
 		{
@@ -26,11 +27,13 @@ int execute_command(char *program, string *terminal, int flag)
 		}
 		i = path_search(path, terminal);
 	}
-	else if (path == NULL && terminal->array[0][0] == '/')
+	else if (path == NULL && terminal->array[0][0] == '/'
+	&& environment == 0)
 		i = realpath_check(terminal->array[0]);
-	if (i == 0)
+	if (i == 0 && environment == 0)
 		forking(program, terminal);
-	else if (i != 0 && terminal->words != -1)
+	else if (i != 0 && terminal->words != -1
+	&& environment == 0)
 		i = not_found(program, terminal->array[0], flag, terminal);
 	free_terminal_memory(&terminal);
 

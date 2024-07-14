@@ -2,9 +2,9 @@
 /**
  * print_env - prints the environment of the current process
  * @terminal: a user defined structure
- * Return: Nothing / void
+ * Return: 1 on success, else 0
  */
-void print_env(string *terminal)
+int print_env(string *terminal)
 {
 	int i = 0;
 
@@ -15,5 +15,4 @@ void print_env(string *terminal)
 		for (i = 0; environ[i] != NULL; i++)
 			printf("%s\n", environ[i]);
 	}
-	terminal->words = -1;
 }
