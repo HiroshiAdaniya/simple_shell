@@ -16,7 +16,9 @@ void exit_program(string *terminal, int flag)
 		free_terminal_memory(&terminal);
 		exit(0);
 	}
-	else if (flag == false && getline(&str, &n, stdin) != -1)
+	else if (realpath_check(terminal->array[0]) == 0 &&
+	terminal->array[1][0] == '/' &&
+	flag == false && getline(&str, &n, stdin) != -1)
 	{
 		if (strcmp(str, "exit\n") == 0)
 		{

@@ -29,13 +29,11 @@ int execute_command(char *program, string *terminal, int flag)
 	else if (path == NULL && terminal->array[0][0] == '/')
 		i = realpath_check(terminal->array[0]);
 	if (i == 0)
-	{
 		forking(program, terminal);
-		if (flag == false)
-			exit_program(terminal, false);
-	}
 	else if (i != 0 && terminal->words != -1)
 		i = not_found(program, terminal->array[0], flag, terminal);
+	if (flag == false && i == 0)
+		exit_program(terminal, false);
 	free_terminal_memory(&terminal);
 
 	return (i);
