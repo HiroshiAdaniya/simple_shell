@@ -9,7 +9,7 @@ int print_env(string *terminal)
 	int i = 0;
 
 	if (environ == NULL)
-		reteurn (0)
+		return (0);
 	else if (strcmp(terminal->array[0], "env") == 0 && terminal->array[1] == NULL)
 	{
 		for (i = 0; environ[i] != NULL; i++)
