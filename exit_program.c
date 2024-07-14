@@ -2,16 +2,21 @@
 /**
  * exit_program - if the user enters "exit", program terminates
  * @terminal: a structure
+ * @flag: to indicate if the first command is exit
  * Return: nothing / void
  */
-void exit_program(string *terminal)
+void exit_program(string *terminal, int flag)
 {
-	if (strcmp(terminal->array[0], "exit") == 0 && terminal->array[1] == NULL)
+	(void) flag;
+
+	if (strcmp(terminal->array[0], "exit") == 0 && terminal->array[1] == NULL
+	&& flag == true)
 	{
 		free_terminal_memory(&terminal);
 		exit(0);
 	}
-	else if (terminal->array[0][0] == '/' && terminal->array[1][0] == '/')
+	else if (realpath_check(terminal->array[0]) == 0 &&
+	realpath_check(terminal->array[1]) != 0 && flag == false)
 	{
 		free_terminal_memory(&terminal);
 		exit(2);

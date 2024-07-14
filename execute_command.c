@@ -11,7 +11,6 @@ int execute_command(char *program, string *terminal, int flag)
 	char *path = NULL;
 	int i = -1;
 
-	exit_program(terminal);
 	path = getenv("PATH");
 	if (path != NULL && strlen(path) != 0)
 	{
@@ -24,6 +23,7 @@ int execute_command(char *program, string *terminal, int flag)
 	}
 	else if (path == NULL && terminal->array[0][0] == '/')
 		i = realpath_check(terminal->array[0]);
+	exit_program(terminal, true);
 	if (i == 0)
 		forking(program, terminal);
 	else if (i != 0 && terminal->words != -1)
@@ -57,6 +57,7 @@ void forking(char *program, string *terminal)
 	}
 	else
 		wait(NULL);
+	exit_program(terminal, false);
 }
 /**
  * path_copy - copies a sting to another string
