@@ -45,6 +45,7 @@ int execute_command(char *program, string *terminal, int flag)
 void forking(char *program, string *terminal)
 {
 	pid_t child = 0;
+	int status = 0;
 
 	child = fork();
 	if (child == -1)
@@ -60,7 +61,9 @@ void forking(char *program, string *terminal)
 		exit(0);
 	}
 	else
-		wait(NULL);
+		waitpid(child, &status, 0);
+	if (status != 0)
+		exit_program(terminal, status);
 }
 /**
  * path_copy - copies a sting to another string
